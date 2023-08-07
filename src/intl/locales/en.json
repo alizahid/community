@@ -1,0 +1,43 @@
+{
+  "screen": {
+    "auth": {
+      "signIn": {
+        "form": {
+          "email": {
+            "label": "Email"
+          },
+          "password": {
+            "label": "Password"
+          },
+          "submit": "Sign in"
+        },
+        "title": "Sign in"
+      },
+      "signUp": {
+        "form": {
+          "email": {
+            "label": "What's your email address?",
+            "placeholder": "Email"
+          },
+          "password": {
+            "label": "Pick a strong password",
+            "placeholder": "Password"
+          },
+          "submit": "Sign up",
+          "username": {
+            "label": "Pick a unique username",
+            "placeholder": "Username"
+          }
+        },
+        "title": "Sign up"
+      }
+    },
+    "home": {
+      "auth": {
+        "signIn": "Sign in",
+        "signUp": "Sign up"
+      },
+      "title": "Community"
+    }
+  }
+}

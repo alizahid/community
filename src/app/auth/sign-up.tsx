@@ -1,0 +1,129 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type FunctionComponent } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { ScrollView } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useTranslations } from 'use-intl'
+
+import { Button } from '~/components/common/button'
+import { Input } from '~/components/common/input'
+import { Message } from '~/components/common/message'
+import { type Form, schema, useSignUp } from '~/hooks/auth/sign-up'
+import { useKeyboard } from '~/hooks/keyboard'
+import { getSpace, useTailwind } from '~/lib/tailwind'
+
+const Screen: FunctionComponent = () => {
+  const insets = useSafeAreaInsets()
+
+  const tw = useTailwind()
+  const t = useTranslations('screen.auth.signUp')
+
+  const { visible } = useKeyboard()
+
+  const { error, loading, signUp } = useSignUp()
+
+  const { control, handleSubmit, setFocus } = useForm<Form>({
+    defaultValues: {
+      email: '',
+      password: '',
+      username: '',
+    },
+    resolver: zodResolver(schema),
+  })
+
+  const onSubmit = handleSubmit(async (data) => {
+    if (loading) {
+      return
+    }
+
+    await signUp(data)
+  })
+
+  return (
+    <ScrollView
+      contentContainerStyle={tw`flex-1 justify-end gap-4 p-4 pb-[${
+        (visible ? 0 : insets.bottom) + getSpace(tw, 4)
+      }px]`}
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
+    >
+      {!!error && <Message variant="error">{error}</Message>}
+
+      <Controller
+        control={control}
+        name="email"
+        render={({
+          field: { onBlur, onChange, ref, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            autoCapitalize="none"
+            autoComplete="email"
+            autoCorrect={false}
+            error={error?.message}
+            keyboardType="email-address"
+            label={t('form.email.label')}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            onSubmitEditing={() => setFocus('username')}
+            placeholder={t('form.email.placeholder')}
+            ref={ref}
+            returnKeyType="next"
+            value={value}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="username"
+        render={({
+          field: { onBlur, onChange, ref, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            autoCapitalize="none"
+            autoCorrect={false}
+            error={error?.message}
+            label={t('form.username.label')}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            onSubmitEditing={() => setFocus('password')}
+            placeholder={t('form.username.placeholder')}
+            ref={ref}
+            returnKeyType="next"
+            value={value}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="password"
+        render={({
+          field: { onBlur, onChange, ref, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            error={error?.message}
+            label={t('form.password.label')}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            onSubmitEditing={onSubmit}
+            placeholder={t('form.password.placeholder')}
+            ref={ref}
+            returnKeyType="go"
+            secureTextEntry
+            value={value}
+          />
+        )}
+      />
+
+      <Button loading={loading} onPress={onSubmit}>
+        {t('form.submit')}
+      </Button>
+    </ScrollView>
+  )
+}
+
+export default Screen

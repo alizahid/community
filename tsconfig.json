@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "strict": true,
+    "useUnknownInCatchVariables": false
+  },
+  "extends": "expo/tsconfig.base",
+  "include": ["src", "typings", ".expo/types/**/*.ts", "expo-env.d.ts"]
+}

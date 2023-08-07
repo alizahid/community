@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Community",
+    "slug": "community",
+    "scheme": "community",
+    "version": "1.0.0",
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png"
+      }
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "experiments": {
+      "tsconfigPaths": true,
+      "typedRoutes": true
+    },
+    "icon": "./src/assets/images/icon.png",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-router",
+      "expo-localization"
+    ],
+    "splash": {
+      "backgroundColor": "#ffffff",
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "contain"
+    },
+    "userInterfaceStyle": "automatic"
+  }
+}
