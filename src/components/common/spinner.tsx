@@ -1,7 +1,8 @@
 import { type FunctionComponent } from 'react'
 import { ActivityIndicator, type StyleProp, type ViewStyle } from 'react-native'
 
-import { getColor, type TailwindColor, useTailwind } from '~/lib/tailwind'
+import { getColor, useTailwind } from '~/lib/tailwind'
+import { type TailwindColor } from '~/types/tailwind'
 
 type Props = {
   color?: TailwindColor

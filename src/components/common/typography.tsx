@@ -1,11 +1,8 @@
 import { type FunctionComponent, type ReactNode } from 'react'
 import { type StyleProp, Text, type TextStyle } from 'react-native'
 
-import {
-  type TailwindColor,
-  type TailwindFontSize,
-  useTailwind,
-} from '~/lib/tailwind'
+import { useTailwind } from '~/lib/tailwind'
+import { type TailwindColor, type TailwindFontSize } from '~/types/tailwind'
 
 type Props = {
   align?: 'left' | 'center' | 'right'

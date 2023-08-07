@@ -2,7 +2,8 @@ import { type FunctionComponent } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 
-import { getColor, type TailwindColor, useTailwind } from '~/lib/tailwind'
+import { getColor, useTailwind } from '~/lib/tailwind'
+import { type TailwindColor } from '~/types/tailwind'
 
 export type IconName = keyof typeof icons
 
