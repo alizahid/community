@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router'
 import { useCallback, useState } from 'react'
 
 import { supabase } from '~/lib/supabase'
+import { queryClient } from '~/providers/query'
 
 export const useSignOut = () => {
   const router = useRouter()
@@ -11,6 +12,8 @@ export const useSignOut = () => {
   const signOut = useCallback(async () => {
     try {
       setLoading(true)
+
+      queryClient.clear()
 
       await supabase.auth.signOut()
 
