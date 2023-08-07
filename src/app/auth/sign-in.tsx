@@ -51,24 +51,18 @@ const Screen: FunctionComponent = () => {
       <Controller
         control={control}
         name="email"
-        render={({
-          field: { onBlur, onChange, ref, value },
-          fieldState: { error },
-        }) => (
+        render={({ field, fieldState: { error } }) => (
           <Input
+            {...field}
             autoCapitalize="none"
             autoComplete="email"
             autoCorrect={false}
             error={error?.message}
             keyboardType="email-address"
             label={t('form.email.label')}
-            onBlur={onBlur}
-            onChangeText={onChange}
             onSubmitEditing={() => setFocus('password')}
             placeholder={t('form.email.label')}
-            ref={ref}
             returnKeyType="next"
-            value={value}
           />
         )}
       />
@@ -76,21 +70,15 @@ const Screen: FunctionComponent = () => {
       <Controller
         control={control}
         name="password"
-        render={({
-          field: { onBlur, onChange, ref, value },
-          fieldState: { error },
-        }) => (
+        render={({ field, fieldState: { error } }) => (
           <Input
+            {...field}
             error={error?.message}
             label={t('form.password.label')}
-            onBlur={onBlur}
-            onChangeText={onChange}
             onSubmitEditing={onSubmit}
             placeholder={t('form.password.label')}
-            ref={ref}
             returnKeyType="go"
             secureTextEntry
-            value={value}
           />
         )}
       />

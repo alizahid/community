@@ -22,7 +22,6 @@ type Props = Pick<
   | 'keyboardType'
   | 'multiline'
   | 'onBlur'
-  | 'onChangeText'
   | 'onFocus'
   | 'onSubmitEditing'
   | 'placeholder'
@@ -35,6 +34,8 @@ type Props = Pick<
   label?: string
   style?: StyleProp<ViewStyle>
   styleInput?: StyleProp<TextStyle>
+
+  onChange: (value: string) => void
 }
 
 export const Input = forwardRef<TextInput, Props>(
@@ -51,7 +52,7 @@ export const Input = forwardRef<TextInput, Props>(
       label,
       multiline,
       onBlur,
-      onChangeText,
+      onChange,
       onFocus,
       onSubmitEditing,
       placeholder,
@@ -88,7 +89,7 @@ export const Input = forwardRef<TextInput, Props>(
 
             onBlur?.(event)
           }}
-          onChangeText={onChangeText}
+          onChangeText={(value) => onChange(value)}
           onFocus={(event) => {
             setFocused(true)
 
@@ -100,9 +101,10 @@ export const Input = forwardRef<TextInput, Props>(
           ref={ref}
           returnKeyType={returnKeyType}
           secureTextEntry={secureTextEntry}
+          selectionColor={getColor(tw, 'primary-9')}
           style={[
             tw.style(
-              'font-body-regular rounded-lg border border-gray-7 bg-gray-2 px-3 text-base leading-tight',
+              'font-body-regular rounded-lg border border-gray-7 bg-gray-2 text-gray-12 px-3 text-base leading-tight',
               multiline ? 'h-24 py-3' : 'h-12 pb-0 pt-0.5',
               error && 'border-red-7',
               focused && (error ? 'border-red-8' : 'border-primary-8'),

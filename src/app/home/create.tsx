@@ -35,7 +35,7 @@ const Screen: FunctionComponent = () => {
     <View style={tw`gap-4 p-4 flex-1`}>
       <Input
         multiline
-        onChangeText={setContent}
+        onChange={setContent}
         placeholder="Say something nice"
         style={tw`flex-1`}
         styleInput={tw`flex-1`}
