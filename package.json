@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "expo start --ios",
     "lint": "eslint . --fix",
+    "prepare": "husky install",
     "supabase:gen": "supabase gen types typescript --local > src/types/supabase.ts"
   },
   "dependencies": {
@@ -55,11 +56,19 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-destructure-keys": "^1.5.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "^3.0.1",
     "typescript": "^5.1.6"
   },
   "resolutions": {
     "react-refresh": "~0.14.0",
     "eslint-plugin-prettier": "^5.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
