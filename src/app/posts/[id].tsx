@@ -25,7 +25,7 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, createdAt, community:communities(slug, name), user:users(username), likes(userId), comments(userId)',
+          'id, content, meta, createdAt, community:communities(id, slug, name), user:users(id, username), likes(userId), comments(userId)',
         )
         .eq('id', id)
         .single()
@@ -61,7 +61,7 @@ const Screen: FunctionComponent = () => {
 
       const { data } = await supabase
         .from('comments')
-        .select('id, content, createdAt, user:users(username)')
+        .select('id, content, createdAt, user:users(id, username)')
         .order('createdAt', {
           ascending: false,
         })

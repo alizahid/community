@@ -17,6 +17,7 @@ import { Typography } from '../common/typography'
 export type Post = {
   comments: number
   community: {
+    id: number
     name: string
     slug: string
   } | null
@@ -27,6 +28,7 @@ export type Post = {
   likes: number
   meta: Json
   user: {
+    id: string
     username: string
   } | null
 }
@@ -85,6 +87,14 @@ export const PostCard: FunctionComponent<Props> = ({
 
       queryClient.invalidateQueries({
         queryKey: ['post', post.id],
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['user_posts', post.user?.id],
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['community_posts', post.community?.id],
       })
     },
   })

@@ -3,6 +3,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { type FunctionComponent, useEffect } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Separator } from '~/components/common/separator'
 import { CommunityCard } from '~/components/communities/card'
@@ -12,6 +13,8 @@ import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
 
 const Screen: FunctionComponent = () => {
+  const insets = useSafeAreaInsets()
+
   const navigation = useNavigation()
   const params = useLocalSearchParams()
 
@@ -59,7 +62,7 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, createdAt, community:communities(slug, name), user:users(username), likes(userId), comments(userId)',
+          'id, content, meta, createdAt, community:communities(id, slug, name), user:users(id, username), likes(userId), comments(userId)',
         )
         .order('createdAt', {
           ascending: false,
@@ -115,6 +118,7 @@ const Screen: FunctionComponent = () => {
           />
         ) : null
       }
+      contentContainerStyle={tw`pb-[${insets.bottom}px]`}
       data={data}
       estimatedItemSize={108}
       onEndReached={() => {

@@ -15,6 +15,7 @@ export type Comment = {
   createdAt: Date
   id: number
   user: {
+    id: string
     username: string
   } | null
 }
