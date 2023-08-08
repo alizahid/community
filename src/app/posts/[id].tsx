@@ -30,20 +30,18 @@ const Screen: FunctionComponent = () => {
         .eq('id', id)
         .single()
 
-      if (!data) {
-        return
-      }
-
-      return {
-        comments: data.comments.length,
-        community: data.community,
-        content: data.content,
-        createdAt: parseJSON(data.createdAt),
-        id: data.id,
-        liked: !!data.likes.find(({ userId }) => userId === session?.user.id),
-        likes: data.likes.length,
-        meta: data.meta,
-        user: data.user,
+      if (data) {
+        return {
+          comments: data.comments.length,
+          community: data.community,
+          content: data.content,
+          createdAt: parseJSON(data.createdAt),
+          id: data.id,
+          liked: !!data.likes.find(({ userId }) => userId === session?.user.id),
+          likes: data.likes.length,
+          meta: data.meta,
+          user: data.user,
+        }
       }
     },
     queryKey: ['post', id],

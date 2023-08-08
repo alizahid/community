@@ -11,7 +11,7 @@ import { useAuth } from '~/providers/auth'
 const Screen: FunctionComponent = () => {
   const { session } = useAuth()
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<{
+  const posts = useInfiniteQuery<{
     cursor?: number
     posts: Array<Post>
   }>({
@@ -66,16 +66,16 @@ const Screen: FunctionComponent = () => {
     queryKey: ['posts'],
   })
 
-  const posts = (data?.pages.map(({ posts }) => posts) ?? []).flat()
+  const data = (posts.data?.pages.map(({ posts }) => posts) ?? []).flat()
 
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
-      data={posts}
+      data={data}
       estimatedItemSize={108}
       onEndReached={() => {
-        if (hasNextPage) {
-          fetchNextPage()
+        if (posts.hasNextPage) {
+          posts.fetchNextPage()
         }
       }}
       renderItem={({ item }) => <PostCard post={item} />}

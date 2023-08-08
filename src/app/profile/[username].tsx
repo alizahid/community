@@ -29,14 +29,12 @@ const Screen: FunctionComponent = () => {
         .eq('username', username)
         .single()
 
-      if (!data) {
-        return
-      }
-
-      return {
-        createdAt: parseJSON(data.createdAt),
-        id: data.id,
-        username: data.username,
+      if (data) {
+        return {
+          createdAt: parseJSON(data.createdAt),
+          id: data.id,
+          username: data.username,
+        }
       }
     },
     queryKey: ['profile', username],
