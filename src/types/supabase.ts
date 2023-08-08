@@ -36,18 +36,21 @@ export interface Database {
     Tables: {
       comments: {
         Row: {
+          content: string
           createdAt: string
           id: number
           postId: number
           userId: string
         }
         Insert: {
+          content: string
           createdAt?: string
           id?: number
           postId: number
           userId: string
         }
         Update: {
+          content?: string
           createdAt?: string
           id?: number
           postId?: number

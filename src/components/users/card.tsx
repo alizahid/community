@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router'
 import { type FunctionComponent } from 'react'
 import { type StyleProp, View, type ViewStyle } from 'react-native'
+import { useTranslations } from 'use-intl'
 
 import { useTailwind } from '~/lib/tailwind'
 
@@ -8,25 +9,26 @@ import { Avatar } from '../common/avatar'
 import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
 
-export type Community = {
-  description: string
-  id: number
-  name: string
-  slug: string
+export type User = {
+  createdAt: Date
+  id: string
+  username: string
 }
 
 type Props = {
-  community: Community
+  user: User
   linked?: boolean
   style?: StyleProp<ViewStyle>
 }
 
-export const CommunityCard: FunctionComponent<Props> = ({
-  community,
+export const UserCard: FunctionComponent<Props> = ({
   linked = true,
   style,
+  user,
 }) => {
   const router = useRouter()
+
+  const t = useTranslations('component.users.card')
 
   const tw = useTailwind()
 
@@ -34,16 +36,18 @@ export const CommunityCard: FunctionComponent<Props> = ({
 
   return (
     <Main
-      onPress={() => router.push(`/communities/${community.slug}`)}
+      onPress={() => router.push(`/profile/${user.username}`)}
       style={[tw`flex-row items-center gap-4 p-4`, style]}
     >
-      <Avatar name={community.slug} />
+      <Avatar name={user.username} variant="user" />
 
       <View style={tw`flex-1`}>
-        <Typography weight="medium">{community.name}</Typography>
+        <Typography weight="medium">{user.username}</Typography>
 
         <Typography color="gray-11" size="sm">
-          {community.description}
+          {t('joined', {
+            date: user.createdAt,
+          })}
         </Typography>
       </View>
     </Main>

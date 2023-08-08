@@ -1,4 +1,11 @@
 {
+  "component": {
+    "users": {
+      "card": {
+        "joined": "Joined {date, date, medium}"
+      }
+    }
+  },
   "screen": {
     "auth": {
       "signIn": {
@@ -32,12 +39,21 @@
         "title": "Sign up"
       }
     },
+    "community": {
+      "title": "Loading"
+    },
     "home": {
       "auth": {
         "signIn": "Sign in",
         "signUp": "Sign up"
       },
       "title": "Community"
+    },
+    "post": {
+      "title": "Post"
+    },
+    "profile": {
+      "title": "Loading"
     }
   }
 }

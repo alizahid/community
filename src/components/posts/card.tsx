@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { type FunctionComponent } from 'react'
-import { View } from 'react-native'
+import { type StyleProp, View, type ViewStyle } from 'react-native'
 import { useFormatter } from 'use-intl'
 
 import { supabase } from '~/lib/supabase'
@@ -32,11 +32,18 @@ export type Post = {
 }
 
 type Props = {
+  community?: boolean
   linked?: boolean
   post: Post
+  style?: StyleProp<ViewStyle>
 }
 
-export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
+export const PostCard: FunctionComponent<Props> = ({
+  community = true,
+  linked = true,
+  post,
+  style,
+}) => {
   const router = useRouter()
 
   const formatter = useFormatter()
@@ -75,13 +82,17 @@ export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
       queryClient.invalidateQueries({
         queryKey: ['posts'],
       })
+
+      queryClient.invalidateQueries({
+        queryKey: ['post', post.id],
+      })
     },
   })
 
   const Main = linked ? Pressable : View
 
   return (
-    <View style={tw`flex-row`}>
+    <View style={[tw`flex-row`, style]}>
       <Pressable
         onPress={() => likePost.mutate(post.id)}
         style={tw`items-center justify-center gap-2 w-12`}
@@ -108,13 +119,15 @@ export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
         onPress={() => router.push(`/posts/${post.id}`)}
         style={tw`flex-1 gap-2 py-4 pr-4`}
       >
-        <Pressable
-          onPress={() => router.push(`/communities/${post.community?.slug}`)}
-        >
-          <Typography color="gray-11" size="xs" weight="medium">
-            {post.community?.name}
-          </Typography>
-        </Pressable>
+        {community && (
+          <Pressable
+            onPress={() => router.push(`/communities/${post.community?.slug}`)}
+          >
+            <Typography color="gray-11" size="xs" weight="medium">
+              {post.community?.name}
+            </Typography>
+          </Pressable>
+        )}
 
         <Typography>{post.content}</Typography>
 
@@ -128,7 +141,7 @@ export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
           </Pressable>
 
           <View style={tw`flex-row items-center gap-2`}>
-            <Icon color="gray-9" name="comment" style={tw`h-3.5 w-3.5`} />
+            <Icon color="gray-9" name="comment" style={tw`h-4 w-4`} />
 
             <Typography color="gray-11" size="sm" style={tw`tabular-nums`}>
               {formatter.number(post.comments, {
@@ -138,7 +151,7 @@ export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
           </View>
 
           <View style={tw`flex-row items-center gap-2`}>
-            <Icon color="gray-9" name="clock" style={tw`h-3.5 w-3.5`} />
+            <Icon color="gray-9" name="clock" style={tw`h-4 w-4`} />
 
             <Typography color="gray-11" size="sm">
               {formatter.relativeTime(post.createdAt)}

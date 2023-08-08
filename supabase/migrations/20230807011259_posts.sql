@@ -8,6 +8,7 @@ CREATE TABLE "public"."comments" (
   "id" integer NOT NULL DEFAULT nextval('comments_id_seq'::regclass),
   "postId" integer NOT NULL,
   "userId" uuid NOT NULL,
+  "content" text NOT NULL,
   "createdAt" timestamp without time zone NOT NULL DEFAULT NOW()
 );
 
