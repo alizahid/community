@@ -1,12 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { type FunctionComponent } from 'react'
 import { type StyleProp, View, type ViewStyle } from 'react-native'
 import { useFormatter } from 'use-intl'
 
-import { supabase } from '~/lib/supabase'
+import { useLikePost } from '~/hooks/posts/like'
 import { useTailwind } from '~/lib/tailwind'
-import { useAuth } from '~/providers/auth'
 import { type Json } from '~/types/supabase'
 
 import { Avatar } from '../common/avatar'
@@ -51,64 +49,19 @@ export const PostCard: FunctionComponent<Props> = ({
 
   const formatter = useFormatter()
 
-  const { session } = useAuth()
-
   const tw = useTailwind()
 
-  const queryClient = useQueryClient()
-
-  const likePost = useMutation({
-    mutationFn: async (postId: number) => {
-      const userId = session?.user.id
-
-      if (!userId) {
-        return
-      }
-
-      const { data: exists } = await supabase
-        .from('likes')
-        .select('id')
-        .eq('postId', postId)
-        .eq('userId', userId)
-        .single()
-
-      if (exists) {
-        return supabase.from('likes').delete().eq('id', exists.id)
-      }
-
-      return supabase.from('likes').insert({
-        postId,
-        userId,
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['posts'],
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: ['post', post.id],
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: ['user_posts', post.user?.id],
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: ['community_posts', post.community?.id],
-      })
-    },
-  })
+  const { likePost, loading } = useLikePost(post)
 
   const Main = linked ? Pressable : View
 
   return (
     <View style={[tw`flex-row`, style]}>
       <Pressable
-        onPress={() => likePost.mutate(post.id)}
+        onPress={() => likePost()}
         style={tw`items-center justify-center gap-2 w-12`}
       >
-        {likePost.isLoading ? (
+        {loading ? (
           <Spinner />
         ) : (
           <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
