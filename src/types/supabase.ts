@@ -4,7 +4,7 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Array<Json>
+  | Json[]
 
 export interface Database {
   graphql_public: {
@@ -252,7 +252,7 @@ export interface Database {
     Tables: {
       buckets: {
         Row: {
-          allowed_mime_types: Array<string> | null
+          allowed_mime_types: string[] | null
           avif_autodetection: boolean | null
           created_at: string | null
           file_size_limit: number | null
@@ -263,7 +263,7 @@ export interface Database {
           updated_at: string | null
         }
         Insert: {
-          allowed_mime_types?: Array<string> | null
+          allowed_mime_types?: string[] | null
           avif_autodetection?: boolean | null
           created_at?: string | null
           file_size_limit?: number | null
@@ -274,7 +274,7 @@ export interface Database {
           updated_at?: string | null
         }
         Update: {
-          allowed_mime_types?: Array<string> | null
+          allowed_mime_types?: string[] | null
           avif_autodetection?: boolean | null
           created_at?: string | null
           file_size_limit?: number | null
@@ -323,7 +323,7 @@ export interface Database {
           metadata: Json | null
           name: string | null
           owner: string | null
-          path_tokens: Array<string> | null
+          path_tokens: string[] | null
           updated_at: string | null
           version: string | null
         }
@@ -335,7 +335,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
-          path_tokens?: Array<string> | null
+          path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null
         }
@@ -347,7 +347,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
-          path_tokens?: Array<string> | null
+          path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null
         }
@@ -394,10 +394,10 @@ export interface Database {
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
-        Returns: Array<{
+        Returns: {
           size: number
           bucket_id: string
-        }>
+        }[]
       }
       search: {
         Args: {
@@ -410,14 +410,14 @@ export interface Database {
           sortcolumn?: string
           sortorder?: string
         }
-        Returns: Array<{
+        Returns: {
           name: string
           id: string
           updated_at: string
           created_at: string
           last_accessed_at: string
           metadata: Json
-        }>
+        }[]
       }
     }
     Enums: {
