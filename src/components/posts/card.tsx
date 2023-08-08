@@ -27,10 +27,11 @@ export type Post = {
 }
 
 type Props = {
+  linked?: boolean
   post: Post
 }
 
-export const PostCard: FunctionComponent<Props> = ({ post }) => {
+export const PostCard: FunctionComponent<Props> = ({ linked, post }) => {
   const formatter = useFormatter()
 
   const tw = useTailwind()

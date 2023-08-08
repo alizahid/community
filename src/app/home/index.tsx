@@ -72,7 +72,7 @@ const Screen: FunctionComponent = () => {
     <FlashList
       ItemSeparatorComponent={Separator}
       data={posts}
-      estimatedItemSize={200}
+      estimatedItemSize={108}
       onEndReached={() => {
         if (hasNextPage) {
           fetchNextPage()
