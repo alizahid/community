@@ -9,6 +9,7 @@ import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
 import { type Json } from '~/types/supabase'
 
+import { Avatar } from '../common/avatar'
 import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
 import { Spinner } from '../common/spinner'
@@ -132,7 +133,10 @@ export const PostCard: FunctionComponent<Props> = ({
         {community && (
           <Pressable
             onPress={() => router.push(`/communities/${post.community?.slug}`)}
+            style={tw`flex-row items-center gap-2`}
           >
+            <Avatar name={post.community?.slug!} style={tw`h-4 w-4`} />
+
             <Typography color="gray-11" size="xs" weight="medium">
               {post.community?.name}
             </Typography>
