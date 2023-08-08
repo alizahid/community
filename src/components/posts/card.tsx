@@ -1,12 +1,17 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'expo-router'
 import { type FunctionComponent } from 'react'
 import { View } from 'react-native'
 import { useFormatter } from 'use-intl'
 
+import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
+import { useAuth } from '~/providers/auth'
 import { type Json } from '~/types/supabase'
 
 import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
+import { Spinner } from '../common/spinner'
 import { Typography } from '../common/typography'
 
 export type Post = {
@@ -31,20 +36,61 @@ type Props = {
   post: Post
 }
 
-export const PostCard: FunctionComponent<Props> = ({ linked, post }) => {
+export const PostCard: FunctionComponent<Props> = ({ linked = true, post }) => {
+  const router = useRouter()
+
   const formatter = useFormatter()
 
+  const { session } = useAuth()
+
   const tw = useTailwind()
+
+  const queryClient = useQueryClient()
+
+  const likePost = useMutation({
+    mutationFn: async (postId: number) => {
+      const userId = session?.user.id
+
+      if (!userId) {
+        return
+      }
+
+      const { data: exists } = await supabase
+        .from('likes')
+        .select('id')
+        .eq('postId', postId)
+        .eq('userId', userId)
+        .single()
+
+      if (exists) {
+        return supabase.from('likes').delete().eq('id', exists.id)
+      }
+
+      return supabase.from('likes').insert({
+        postId,
+        userId,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['posts'],
+      })
+    },
+  })
+
+  const Main = linked ? Pressable : View
 
   return (
     <View style={tw`flex-row`}>
       <Pressable
-        onPress={() => {
-          // TODO: like post
-        }}
+        onPress={() => likePost.mutate(post.id)}
         style={tw`items-center justify-center gap-2 w-12`}
       >
-        <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
+        {likePost.isLoading ? (
+          <Spinner />
+        ) : (
+          <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
+        )}
 
         <Typography
           color="gray-11"
@@ -58,16 +104,12 @@ export const PostCard: FunctionComponent<Props> = ({ linked, post }) => {
         </Typography>
       </Pressable>
 
-      <Pressable
-        onPress={() => {
-          // TODO: navigate to post
-        }}
+      <Main
+        onPress={() => router.push(`/posts/${post.id}`)}
         style={tw`flex-1 gap-2 py-4 pr-4`}
       >
         <Pressable
-          onPress={() => {
-            // TODO: navigate to community
-          }}
+          onPress={() => router.push(`/communities/${post.community?.slug}`)}
         >
           <Typography color="gray-11" size="xs" weight="medium">
             {post.community?.name}
@@ -78,9 +120,7 @@ export const PostCard: FunctionComponent<Props> = ({ linked, post }) => {
 
         <View style={tw`flex-row items-center gap-4`}>
           <Pressable
-            onPress={() => {
-              // TODO: navigate to profile
-            }}
+            onPress={() => router.push(`/profile/${post.user?.username}`)}
           >
             <Typography color="gray-11" size="sm" weight="medium">
               {post.user?.username}
@@ -105,7 +145,7 @@ export const PostCard: FunctionComponent<Props> = ({ linked, post }) => {
             </Typography>
           </View>
         </View>
-      </Pressable>
+      </Main>
     </View>
   )
 }

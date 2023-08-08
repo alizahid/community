@@ -32,7 +32,7 @@ export const CommunityCard: FunctionComponent<Props> = ({
 
   return (
     <Main
-      onPress={() => router.push('/')}
+      onPress={() => router.push(`/communities/${community.slug}`)}
       style={tw`flex-row items-center gap-4 p-4`}
     >
       <Avatar name={community.slug} />
