@@ -71,18 +71,21 @@ export interface Database {
       communities: {
         Row: {
           createdAt: string
+          description: string
           id: number
           name: string
           slug: string
         }
         Insert: {
           createdAt?: string
+          description: string
           id?: number
           name: string
           slug: string
         }
         Update: {
           createdAt?: string
+          description?: string
           id?: number
           name?: string
           slug?: string
@@ -117,6 +120,43 @@ export interface Database {
           },
           {
             foreignKeyName: 'likes_userId_fkey'
+            columns: ['userId']
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      members: {
+        Row: {
+          communityId: number
+          createdAt: string
+          id: number
+          role: Database['public']['Enums']['MemberRole']
+          userId: string
+        }
+        Insert: {
+          communityId: number
+          createdAt?: string
+          id?: number
+          role: Database['public']['Enums']['MemberRole']
+          userId: string
+        }
+        Update: {
+          communityId?: number
+          createdAt?: string
+          id?: number
+          role?: Database['public']['Enums']['MemberRole']
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'members_communityId_fkey'
+            columns: ['communityId']
+            referencedRelation: 'communities'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'members_userId_fkey'
             columns: ['userId']
             referencedRelation: 'users'
             referencedColumns: ['id']
@@ -199,7 +239,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      MemberRole: 'member' | 'admin'
     }
     CompositeTypes: {
       [_ in never]: never

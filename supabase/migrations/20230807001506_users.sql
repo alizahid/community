@@ -46,7 +46,7 @@ $function$;
 CREATE policy "Users can update their profile" ON "public"."users" AS permissive FOR
 UPDATE TO authenticated USING ((auth.uid() = id));
 
-CREATE policy "Users can view others' profiles" ON "public"."users" AS permissive FOR
+CREATE policy "Users can view all profiles" ON "public"."users" AS permissive FOR
 SELECT TO authenticated USING (TRUE);
 
 CREATE TRIGGER on_user_created
