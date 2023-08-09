@@ -58,17 +58,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'comments_postId_fkey'
-            columns: ['postId']
-            referencedRelation: 'posts'
-            referencedColumns: ['id']
+            foreignKeyName: "comments_postId_fkey"
+            columns: ["postId"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'comments_userId_fkey'
-            columns: ['userId']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "comments_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       communities: {
@@ -116,54 +116,51 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'likes_postId_fkey'
-            columns: ['postId']
-            referencedRelation: 'posts'
-            referencedColumns: ['id']
+            foreignKeyName: "likes_postId_fkey"
+            columns: ["postId"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'likes_userId_fkey'
-            columns: ['userId']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "likes_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       members: {
         Row: {
           communityId: number
           createdAt: string
-          id: number
-          role: Database['public']['Enums']['MemberRole']
+          role: Database["public"]["Enums"]["MemberRole"]
           userId: string
         }
         Insert: {
           communityId: number
           createdAt?: string
-          id?: number
-          role: Database['public']['Enums']['MemberRole']
+          role: Database["public"]["Enums"]["MemberRole"]
           userId: string
         }
         Update: {
           communityId?: number
           createdAt?: string
-          id?: number
-          role?: Database['public']['Enums']['MemberRole']
+          role?: Database["public"]["Enums"]["MemberRole"]
           userId?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'members_communityId_fkey'
-            columns: ['communityId']
-            referencedRelation: 'communities'
-            referencedColumns: ['id']
+            foreignKeyName: "members_communityId_fkey"
+            columns: ["communityId"]
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'members_userId_fkey'
-            columns: ['userId']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "members_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       posts: {
@@ -193,17 +190,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'posts_community_fkey'
-            columns: ['communityId']
-            referencedRelation: 'communities'
-            referencedColumns: ['id']
+            foreignKeyName: "posts_community_fkey"
+            columns: ["communityId"]
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'posts_userId_fkey'
-            columns: ['userId']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "posts_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       users: {
@@ -227,11 +224,11 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'users_id_fkey'
-            columns: ['id']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
     }
@@ -242,7 +239,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      MemberRole: 'member' | 'admin'
+      MemberRole: "member" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -286,11 +283,11 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'buckets_owner_fkey'
-            columns: ['owner']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "buckets_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       migrations: {
@@ -353,11 +350,11 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'objects_bucketId_fkey'
-            columns: ['bucket_id']
-            referencedRelation: 'buckets'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          }
         ]
       }
     }
@@ -428,3 +425,4 @@ export interface Database {
     }
   }
 }
+
