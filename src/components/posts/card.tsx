@@ -3,6 +3,7 @@ import { type FunctionComponent } from 'react'
 import { type StyleProp, View, type ViewStyle } from 'react-native'
 import { useFormatter } from 'use-intl'
 
+import { postMeta } from '~/hooks/posts/create'
 import { useLikePost } from '~/hooks/posts/like'
 import { useTailwind } from '~/lib/tailwind'
 import { type Json } from '~/types/supabase'
@@ -12,6 +13,7 @@ import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
 import { Spinner } from '../common/spinner'
 import { Typography } from '../common/typography'
+import { Gallery } from './gallery'
 
 export type Post = {
   comments: number
@@ -52,6 +54,8 @@ export const PostCard: FunctionComponent<Props> = ({
   const tw = useTailwind()
 
   const { likePost, loading } = useLikePost(post)
+
+  const meta = postMeta.parse(post.meta)
 
   const Main = linked ? Pressable : View
 
@@ -97,6 +101,8 @@ export const PostCard: FunctionComponent<Props> = ({
         )}
 
         <Typography>{post.content}</Typography>
+
+        <Gallery images={meta.images} />
 
         <View style={tw`flex-row items-center gap-4`}>
           <Pressable

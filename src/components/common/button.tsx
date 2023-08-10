@@ -18,7 +18,7 @@ type Props = {
   loading?: boolean
   style?: StyleProp<ViewStyle>
   styleLabel?: StyleProp<TextStyle>
-  variant?: 'primary' | 'text'
+  variant?: 'primary' | 'accent' | 'text'
 
   onPress?: (event: GestureResponderEvent) => void
 }
@@ -41,13 +41,14 @@ export const Button: FunctionComponent<Props> = ({
       style={[
         tw.style(
           'h-12 flex-row items-center justify-center gap-2 rounded-lg px-4',
+          variant === 'accent' && 'bg-accent-9',
           variant === 'primary' && 'bg-primary-9',
         ),
         style,
       ]}
     >
       <Typography
-        color={variant === 'primary' ? 'gray-1' : 'gray-12'}
+        color={variant === 'text' ? 'primary-9' : 'white'}
         style={styleLabel}
         weight="bold"
       >
@@ -55,7 +56,7 @@ export const Button: FunctionComponent<Props> = ({
       </Typography>
 
       {loading && (
-        <Spinner color={variant === 'primary' ? 'gray-1' : 'gray-12'} />
+        <Spinner color={variant === 'text' ? 'primary-9' : 'white'} />
       )}
     </Pressable>
   )

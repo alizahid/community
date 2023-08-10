@@ -17,7 +17,7 @@ export const TabBar: FunctionComponent<Props> = ({
   navigation,
   state,
 }) => {
-  const { bottom } = useSafeAreaInsets()
+  const insets = useSafeAreaInsets()
 
   const formatter = useFormatter()
 
@@ -65,9 +65,9 @@ export const TabBar: FunctionComponent<Props> = ({
             key={route.key}
             onLongPress={onLongPress}
             onPress={onPress}
-            style={tw`flex-1 items-center justify-center pb-[${bottom}px] h-[${
-              getSpace(tw, 12) + bottom
-            }px]`}
+            style={tw`flex-1 items-center justify-center pb-[${
+              insets.bottom
+            }px] h-[${getSpace(tw, 12) + insets.bottom}px]`}
           >
             <View>
               {data.options?.tabBarIcon?.({

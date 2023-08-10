@@ -10,4 +10,5 @@ import '@formatjs/intl-numberformat/polyfill' // 9
 import '@formatjs/intl-numberformat/locale-data/en' // 10
 import '@formatjs/intl-relativetimeformat/polyfill' // 11
 import '@formatjs/intl-relativetimeformat/locale-data/en' // 12
+import 'fast-text-encoding'
 import 'expo-router/entry'

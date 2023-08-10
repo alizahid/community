@@ -18,3 +18,15 @@ export const supabase = createClient<Database>(
     },
   },
 )
+
+export const BUCKET_ASSETS = 'assets'
+
+export const getImageUrl = (url: string, width = 400) => {
+  const { data } = supabase.storage.from(BUCKET_ASSETS).getPublicUrl(url, {
+    transform: {
+      width,
+    },
+  })
+
+  return data.publicUrl
+}

@@ -1,5 +1,11 @@
 {
   "component": {
+    "communities": {
+      "card": {
+        "join": "Join",
+        "leave": "Leave"
+      }
+    },
     "users": {
       "card": {
         "joined": "Joined {date, date, medium}"
@@ -41,6 +47,15 @@
     },
     "community": {
       "title": "Loading"
+    },
+    "create": {
+      "form": {
+        "content": {
+          "placeholder": "Say something nice"
+        },
+        "submit": "Submit"
+      },
+      "title": "New post"
     },
     "home": {
       "auth": {

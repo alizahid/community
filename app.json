@@ -10,9 +10,7 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png"
       }
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true
@@ -21,7 +19,13 @@
     "orientation": "portrait",
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Community would like to access your photos."
+        }
+      ]
     ],
     "splash": {
       "backgroundColor": "#ffffff",

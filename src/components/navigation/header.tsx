@@ -16,12 +16,12 @@ export const StackHeader: FunctionComponent<Props> = ({
   options,
   ...props
 }) => {
-  const { top } = useSafeAreaInsets()
+  const insets = useSafeAreaInsets()
 
   const tw = useTailwind()
 
   return (
-    <View style={tw`bg-gray-1 pt-[${top}px] border-b border-gray-6`}>
+    <View style={tw`bg-gray-1 pt-[${insets.top}px] border-b border-gray-6`}>
       <View style={tw`h-12 items-center justify-center`}>
         {(options.headerLeft || 'back' in props) && (
           <View style={tw`absolute bottom-0 left-0 flex-row`}>

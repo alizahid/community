@@ -18,17 +18,19 @@ const parse = (radix: Record<string, string>) =>
   )
 
 export const colorsLight = {
+  accent: parse(radix.violet),
   gray: parse(radix.gray),
   green: parse(radix.grass),
-  primary: parse(radix.teal),
+  primary: parse(radix.plum),
   red: parse(radix.tomato),
   yellow: parse(radix.amber),
 }
 
 export const colorsDark = {
+  accent: parse(radix.violetDark),
   gray: parse(radix.grayDark),
   green: parse(radix.grassDark),
-  primary: parse(radix.tealDark),
+  primary: parse(radix.plumDark),
   red: parse(radix.tomatoDark),
   yellow: parse(radix.amberDark),
 }

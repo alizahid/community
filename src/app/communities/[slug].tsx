@@ -1,13 +1,15 @@
 import { FlashList } from '@shopify/flash-list'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
-import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
 import { type FunctionComponent, useEffect } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { IconButton } from '~/components/common/icon-button'
 import { Separator } from '~/components/common/separator'
 import { CommunityCard } from '~/components/communities/card'
 import { type Post, PostCard } from '~/components/posts/card'
+import { useCommunity } from '~/hooks/communities/get'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
@@ -15,6 +17,7 @@ import { useAuth } from '~/providers/auth'
 const Screen: FunctionComponent = () => {
   const insets = useSafeAreaInsets()
 
+  const router = useRouter()
   const navigation = useNavigation()
   const params = useLocalSearchParams()
 
@@ -24,34 +27,30 @@ const Screen: FunctionComponent = () => {
 
   const tw = useTailwind()
 
-  const community = useQuery({
-    queryFn: async () => {
-      const { data } = await supabase
-        .from('communities')
-        .select('id, slug, name, description')
-        .eq('slug', slug)
-        .single()
-
-      return data
-    },
-    queryKey: ['community', slug],
-  })
+  const { community } = useCommunity(slug)
 
   useEffect(() => {
-    if (!community.data) {
+    if (!community) {
       return
     }
 
     navigation.setOptions({
-      title: community.data.name,
+      headerRight: () =>
+        community.member ? (
+          <IconButton
+            name="create"
+            onPress={() => router.push(`/create/${community?.slug}`)}
+          />
+        ) : null,
+      title: community.name,
     })
-  }, [community.data, navigation])
+  }, [community, navigation, router])
 
   const posts = useInfiniteQuery<{
     cursor?: number
     posts: Array<Post>
   }>({
-    enabled: !!community.data,
+    enabled: !!community,
     getNextPageParam: ({ cursor }) => cursor,
     queryFn: async ({ pageParam = 0 }) => {
       const limit = 10
@@ -67,7 +66,7 @@ const Screen: FunctionComponent = () => {
         .order('createdAt', {
           ascending: false,
         })
-        .eq('communityId', community.data?.id)
+        .eq('communityId', community?.id)
         .range(from, to)
         .limit(limit + 1)
 
@@ -101,7 +100,7 @@ const Screen: FunctionComponent = () => {
         posts,
       }
     },
-    queryKey: ['community_posts', community.data?.id],
+    queryKey: ['community_posts', community?.id],
   })
 
   const data = (posts.data?.pages.map(({ posts }) => posts) ?? []).flat()
@@ -110,10 +109,11 @@ const Screen: FunctionComponent = () => {
     <FlashList
       ItemSeparatorComponent={Separator}
       ListHeaderComponent={() =>
-        community.data ? (
+        community ? (
           <CommunityCard
-            community={community.data}
+            community={community}
             linked={false}
+            membership
             style={tw`border-gray-6 border-b-2`}
           />
         ) : null
