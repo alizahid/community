@@ -7,7 +7,7 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff",
-        "foregroundImage": "./src/assets/images/adaptive-icon.png"
+        "foregroundImage": "./src/assets/expo/adaptive-icon.png"
       }
     },
     "assetBundlePatterns": ["**/*"],
@@ -15,7 +15,7 @@
       "tsconfigPaths": true,
       "typedRoutes": true
     },
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./src/assets/expo/icon.png",
     "orientation": "portrait",
     "plugins": [
       "expo-router",
@@ -29,7 +29,7 @@
     ],
     "splash": {
       "backgroundColor": "#ffffff",
-      "image": "./src/assets/images/splash.png",
+      "image": "./src/assets/expo/splash.png",
       "resizeMode": "contain"
     },
     "userInterfaceStyle": "automatic"
