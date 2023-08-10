@@ -11,7 +11,6 @@ import { type Json } from '~/types/supabase'
 import { Avatar } from '../common/avatar'
 import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
-import { Spinner } from '../common/spinner'
 import { Typography } from '../common/typography'
 import { Gallery } from './gallery'
 
@@ -53,7 +52,7 @@ export const PostCard: FunctionComponent<Props> = ({
 
   const tw = useTailwind()
 
-  const { likePost, loading } = useLikePost(post)
+  const { likePost } = useLikePost(post)
 
   const meta = postMeta.parse(post.meta)
 
@@ -65,11 +64,7 @@ export const PostCard: FunctionComponent<Props> = ({
         onPress={() => likePost()}
         style={tw`items-center justify-center gap-2 w-12`}
       >
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
-        )}
+        <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
 
         <Typography
           color="gray-11"

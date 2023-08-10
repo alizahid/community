@@ -22,7 +22,7 @@ const Screen: FunctionComponent = () => {
       const from = pageParam * limit
       const to = from + limit
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('posts')
         .select(
           'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
@@ -32,8 +32,6 @@ const Screen: FunctionComponent = () => {
         })
         .range(from, to)
         .limit(limit + 1)
-
-      console.log('error', error)
 
       const posts = (data ?? []).map(
         ({
