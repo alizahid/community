@@ -7,6 +7,7 @@ import { supabase } from '~/lib/supabase'
 export const postMeta = z.object({
   images: z.array(
     z.object({
+      hash: z.string().optional(),
       height: z.number(),
       url: z.string(),
       width: z.number(),
@@ -42,10 +43,10 @@ export const useCreatePost = () => {
         const { data, error } = await supabase
           .from('posts')
           .insert({
-            communityId,
+            community_id: communityId,
             content,
             meta,
-            userId,
+            user_id: userId,
           })
           .select('id')
           .single()

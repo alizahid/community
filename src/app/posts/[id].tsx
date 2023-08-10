@@ -25,7 +25,7 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, createdAt, community:communities(id, slug, name), user:users(id, username), likes(userId), comments(userId)',
+          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
         )
         .eq('id', id)
         .single()
@@ -35,9 +35,11 @@ const Screen: FunctionComponent = () => {
           comments: data.comments.length,
           community: data.community,
           content: data.content,
-          createdAt: parseJSON(data.createdAt),
+          createdAt: parseJSON(data.created_at),
           id: data.id,
-          liked: !!data.likes.find(({ userId }) => userId === session?.user.id),
+          liked: !!data.likes.find(
+            ({ user_id }) => user_id === session?.user.id,
+          ),
           likes: data.likes.length,
           meta: data.meta,
           user: data.user,
@@ -61,20 +63,22 @@ const Screen: FunctionComponent = () => {
 
       const { data } = await supabase
         .from('comments')
-        .select('id, content, createdAt, user:users(id, username)')
-        .order('createdAt', {
+        .select('id, content, created_at, user:users(id, username)')
+        .order('created_at', {
           ascending: false,
         })
-        .eq('id', post.data?.id)
+        .eq('post_id', post.data?.id)
         .range(from, to)
         .limit(limit + 1)
 
-      const comments = (data ?? []).map(({ content, createdAt, id, user }) => ({
-        content,
-        createdAt: parseJSON(createdAt),
-        id,
-        user,
-      }))
+      const comments = (data ?? []).map(
+        ({ content, created_at, id, user }) => ({
+          content,
+          createdAt: parseJSON(created_at),
+          id,
+          user,
+        }),
+      )
 
       const next = comments.length > limit ? comments.pop() : undefined
 

@@ -19,23 +19,23 @@ export const useJoinCommunity = (community: Community) => {
 
       const { data: exists } = await supabase
         .from('members')
-        .select('communityId, userId')
-        .eq('communityId', community.id)
-        .eq('userId', userId)
+        .select('community_id, user_id')
+        .eq('community_id', community.id)
+        .eq('user_id', userId)
         .single()
 
       if (exists) {
         return supabase
           .from('members')
           .delete()
-          .eq('communityId', community.id)
-          .eq('userId', userId)
+          .eq('community_id', community.id)
+          .eq('user_id', userId)
       }
 
       return supabase.from('members').insert({
-        communityId: community.id,
+        community_id: community.id,
         role: 'member',
-        userId,
+        user_id: userId,
       })
     },
     onSuccess: () => {

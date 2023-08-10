@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { parseJSON } from 'date-fns'
 import { type FunctionComponent } from 'react'
 import { View } from 'react-native'
 import { useFormatter } from 'use-intl'
@@ -37,9 +38,9 @@ const Screen: FunctionComponent = () => {
       {data ? (
         <View style={tw`gap-2 items-center`}>
           <Typography>{data.username}</Typography>
-          <Typography>{data.email}</Typography>
+
           <Typography>
-            {formatter.relativeTime(new Date(data.createdAt))}
+            {formatter.relativeTime(parseJSON(data.created_at))}
           </Typography>
         </View>
       ) : (

@@ -1,4 +1,5 @@
 import { Image } from 'expo-image'
+import { range } from 'lodash'
 import { type FunctionComponent, useRef } from 'react'
 import { type StyleProp, View, type ViewStyle } from 'react-native'
 import {
@@ -32,7 +33,7 @@ export const Gallery: FunctionComponent<Props> = ({ images, style }) => {
   return (
     <>
       <View style={[tw`flex-row flex-wrap gap-2`, style]}>
-        {images.map(({ url }, index) => (
+        {images.map(({ hash, url }, index) => (
           <ImageWrapper
             index={index}
             key={index}
@@ -42,6 +43,7 @@ export const Gallery: FunctionComponent<Props> = ({ images, style }) => {
             viewerRef={viewer}
           >
             <Image
+              placeholder={hash}
               source={getImageUrl(url)}
               style={tw`h-20 w-20 rounded-lg bg-gray-3`}
             />
@@ -63,7 +65,7 @@ export const Gallery: FunctionComponent<Props> = ({ images, style }) => {
               insets.bottom + getSpace(tw, 4)
             }px]`}
           >
-            {[...new Array(images.length)].map((_, item) => (
+            {range(images.length).map((_, item) => (
               <View
                 key={item}
                 style={tw.style(

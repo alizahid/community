@@ -20,8 +20,8 @@ export const useLikePost = (post: Post) => {
       const { data: exists } = await supabase
         .from('likes')
         .select('id')
-        .eq('postId', post.id)
-        .eq('userId', userId)
+        .eq('post_id', post.id)
+        .eq('user_id', userId)
         .single()
 
       if (exists) {
@@ -29,8 +29,8 @@ export const useLikePost = (post: Post) => {
       }
 
       return supabase.from('likes').insert({
-        postId: post.id,
-        userId,
+        post_id: post.id,
+        user_id: userId,
       })
     },
     onSuccess: () => {

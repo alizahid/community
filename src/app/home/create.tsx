@@ -23,9 +23,9 @@ const Screen: FunctionComponent = () => {
     setLoading(true)
 
     await supabase.from('posts').insert({
-      communityId: 1,
+      community_id: 1,
       content,
-      userId: session.user.id,
+      user_id: session.user.id,
     })
 
     setLoading(false)

@@ -8,13 +8,10 @@ import {
   useImperativeHandle,
 } from 'react'
 
+import { type PostMeta } from '~/hooks/posts/create'
 import { BUCKET_ASSETS, supabase } from '~/lib/supabase'
 
-export type ImageProps = {
-  height: number
-  url: string
-  width: number
-}
+export type ImageProps = PostMeta['images'][number]
 
 export type ImagePickerComponent = {
   focus: () => void

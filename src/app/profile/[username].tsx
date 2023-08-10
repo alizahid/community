@@ -28,13 +28,13 @@ const Screen: FunctionComponent = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from('users')
-        .select('id, username, createdAt')
+        .select('id, username, created_at')
         .eq('username', username)
         .single()
 
       if (data) {
         return {
-          createdAt: parseJSON(data.createdAt),
+          createdAt: parseJSON(data.created_at),
           id: data.id,
           username: data.username,
         }
@@ -68,12 +68,12 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, createdAt, community:communities(id, slug, name), user:users(id, username), likes(userId), comments(userId)',
+          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
         )
-        .order('createdAt', {
+        .order('created_at', {
           ascending: false,
         })
-        .eq('userId', user.data?.id)
+        .eq('user_id', user.data?.id)
         .range(from, to)
         .limit(limit + 1)
 
@@ -82,7 +82,7 @@ const Screen: FunctionComponent = () => {
           comments,
           community,
           content,
-          createdAt,
+          created_at,
           id,
           likes,
           meta,
@@ -91,9 +91,9 @@ const Screen: FunctionComponent = () => {
           comments: comments.length,
           community,
           content,
-          createdAt: parseJSON(createdAt),
+          createdAt: parseJSON(created_at),
           id,
-          liked: !!likes.find(({ userId }) => userId === session?.user.id),
+          liked: !!likes.find(({ user_id }) => user_id === session?.user.id),
           likes: likes.length,
           meta,
           user,

@@ -37,35 +37,35 @@ export interface Database {
       comments: {
         Row: {
           content: string
-          createdAt: string
+          created_at: string
           id: number
-          postId: number
-          userId: string
+          post_id: number
+          user_id: string
         }
         Insert: {
           content: string
-          createdAt?: string
+          created_at?: string
           id?: number
-          postId: number
-          userId: string
+          post_id: number
+          user_id: string
         }
         Update: {
           content?: string
-          createdAt?: string
+          created_at?: string
           id?: number
-          postId?: number
-          userId?: string
+          post_id?: number
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "comments_postId_fkey"
-            columns: ["postId"]
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "comments_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "comments_user_id_fkey"
+            columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -73,21 +73,21 @@ export interface Database {
       }
       communities: {
         Row: {
-          createdAt: string
+          created_at: string
           description: string
           id: number
           name: string
           slug: string
         }
         Insert: {
-          createdAt?: string
+          created_at?: string
           description: string
           id?: number
           name: string
           slug: string
         }
         Update: {
-          createdAt?: string
+          created_at?: string
           description?: string
           id?: number
           name?: string
@@ -97,33 +97,33 @@ export interface Database {
       }
       likes: {
         Row: {
-          createdAt: string
+          created_at: string
           id: number
-          postId: number
-          userId: string
+          post_id: number
+          user_id: string
         }
         Insert: {
-          createdAt?: string
+          created_at?: string
           id?: number
-          postId: number
-          userId: string
+          post_id: number
+          user_id: string
         }
         Update: {
-          createdAt?: string
+          created_at?: string
           id?: number
-          postId?: number
-          userId?: string
+          post_id?: number
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "likes_postId_fkey"
-            columns: ["postId"]
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "likes_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "likes_user_id_fkey"
+            columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -131,33 +131,33 @@ export interface Database {
       }
       members: {
         Row: {
-          communityId: number
-          createdAt: string
-          role: Database["public"]["Enums"]["MemberRole"]
-          userId: string
+          community_id: number
+          created_at: string
+          role: Database["public"]["Enums"]["member_role"]
+          user_id: string
         }
         Insert: {
-          communityId: number
-          createdAt?: string
-          role: Database["public"]["Enums"]["MemberRole"]
-          userId: string
+          community_id: number
+          created_at?: string
+          role: Database["public"]["Enums"]["member_role"]
+          user_id: string
         }
         Update: {
-          communityId?: number
-          createdAt?: string
-          role?: Database["public"]["Enums"]["MemberRole"]
-          userId?: string
+          community_id?: number
+          created_at?: string
+          role?: Database["public"]["Enums"]["member_role"]
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "members_communityId_fkey"
-            columns: ["communityId"]
+            foreignKeyName: "members_community_id_fkey"
+            columns: ["community_id"]
             referencedRelation: "communities"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "members_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "members_user_id_fkey"
+            columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -165,39 +165,39 @@ export interface Database {
       }
       posts: {
         Row: {
-          communityId: number
+          community_id: number
           content: string
-          createdAt: string
+          created_at: string
           id: number
           meta: Json
-          userId: string
+          user_id: string
         }
         Insert: {
-          communityId: number
+          community_id: number
           content: string
-          createdAt?: string
+          created_at?: string
           id?: number
           meta?: Json
-          userId: string
+          user_id: string
         }
         Update: {
-          communityId?: number
+          community_id?: number
           content?: string
-          createdAt?: string
+          created_at?: string
           id?: number
           meta?: Json
-          userId?: string
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "posts_community_fkey"
-            columns: ["communityId"]
+            foreignKeyName: "posts_community_id_fkey"
+            columns: ["community_id"]
             referencedRelation: "communities"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "posts_userId_fkey"
-            columns: ["userId"]
+            foreignKeyName: "posts_user_id_fkey"
+            columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -205,19 +205,19 @@ export interface Database {
       }
       users: {
         Row: {
-          createdAt: string
+          created_at: string
           email: string
           id: string
           username: string
         }
         Insert: {
-          createdAt?: string
+          created_at?: string
           email: string
           id: string
           username: string
         }
         Update: {
-          createdAt?: string
+          created_at?: string
           email?: string
           id?: string
           username?: string
@@ -236,10 +236,17 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_user: {
+        Args: {
+          email: string
+          password: string
+          username: string
+        }
+        Returns: string
+      }
     }
     Enums: {
-      MemberRole: "member" | "admin"
+      member_role: "member" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never

@@ -22,6 +22,10 @@ export const supabase = createClient<Database>(
 export const BUCKET_ASSETS = 'assets'
 
 export const getImageUrl = (url: string, width = 400) => {
+  if (url.includes('images.unsplash.com')) {
+    return url.replace('w=1080', `w=${width}`)
+  }
+
   const { data } = supabase.storage.from(BUCKET_ASSETS).getPublicUrl(url, {
     transform: {
       width,

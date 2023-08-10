@@ -21,7 +21,7 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('communities')
         .select('id, slug, name, description')
-        .order('createdAt', {
+        .order('created_at', {
           ascending: false,
         })
         .range(from, to)

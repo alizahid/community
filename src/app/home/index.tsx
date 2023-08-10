@@ -22,23 +22,25 @@ const Screen: FunctionComponent = () => {
       const from = pageParam * limit
       const to = from + limit
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, createdAt, community:communities(id, slug, name), user:users(id, username), likes(userId), comments(userId)',
+          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
         )
-        .order('createdAt', {
+        .order('created_at', {
           ascending: false,
         })
         .range(from, to)
         .limit(limit + 1)
+
+      console.log('error', error)
 
       const posts = (data ?? []).map(
         ({
           comments,
           community,
           content,
-          createdAt,
+          created_at,
           id,
           likes,
           meta,
@@ -47,9 +49,9 @@ const Screen: FunctionComponent = () => {
           comments: comments.length,
           community,
           content,
-          createdAt: parseJSON(createdAt),
+          createdAt: parseJSON(created_at),
           id,
-          liked: !!likes.find(({ userId }) => userId === session?.user.id),
+          liked: !!likes.find(({ user_id }) => user_id === session?.user.id),
           likes: likes.length,
           meta,
           user,
