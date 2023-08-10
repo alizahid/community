@@ -27,7 +27,7 @@ const Screen: FunctionComponent = () => {
 
   const tw = useTailwind()
 
-  const t = useTranslations('screen.create')
+  const t = useTranslations('screen.posts.new')
 
   const { visible } = useKeyboard()
 

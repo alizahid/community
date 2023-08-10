@@ -45,7 +45,7 @@ const Screen: FunctionComponent = () => {
         community.member ? (
           <IconButton
             name="create"
-            onPress={() => router.push(`/create/${community?.slug}`)}
+            onPress={() => router.push(`/posts/new/${community?.slug}`)}
           />
         ) : null,
       title: community.name,

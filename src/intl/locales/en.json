@@ -59,15 +59,6 @@
     "community": {
       "title": "Loading"
     },
-    "create": {
-      "form": {
-        "content": {
-          "placeholder": "Say something nice"
-        },
-        "submit": "Submit"
-      },
-      "title": "New post"
-    },
     "home": {
       "title": "Home"
     },
@@ -78,8 +69,19 @@
       },
       "title": "Community"
     },
-    "post": {
-      "title": "Post"
+    "posts": {
+      "new": {
+        "form": {
+          "content": {
+            "placeholder": "Say something nice"
+          },
+          "submit": "Submit"
+        },
+        "title": "New post"
+      },
+      "post": {
+        "title": "Post"
+      }
     },
     "profile": {
       "title": "Loading"

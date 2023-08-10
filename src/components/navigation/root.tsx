@@ -41,13 +41,6 @@ export const Root: FunctionComponent = () => {
       />
 
       <Stack.Screen
-        name="create/[slug]"
-        options={{
-          title: t('create.title'),
-        }}
-      />
-
-      <Stack.Screen
         name="communities/[slug]"
         options={{
           title: t('community.title'),
@@ -55,9 +48,16 @@ export const Root: FunctionComponent = () => {
       />
 
       <Stack.Screen
+        name="posts/new/[slug]"
+        options={{
+          title: t('posts.new.title'),
+        }}
+      />
+
+      <Stack.Screen
         name="posts/[id]"
         options={{
-          title: t('post.title'),
+          title: t('posts.post.title'),
         }}
       />
 
