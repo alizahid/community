@@ -102,7 +102,14 @@ export const PostCard: FunctionComponent<Props> = ({
         <View style={tw`flex-row items-center gap-4`}>
           <Pressable
             onPress={() => router.push(`/profile/${post.user?.username}`)}
+            style={tw`flex-row items-center gap-2`}
           >
+            <Avatar
+              name={post.user?.username!}
+              style={tw`h-4 w-4`}
+              variant="user"
+            />
+
             <Typography color="gray-11" size="sm" weight="medium">
               {post.user?.username}
             </Typography>

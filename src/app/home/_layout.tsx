@@ -1,11 +1,14 @@
 import { Tabs } from 'expo-router'
 import { type FunctionComponent } from 'react'
+import { useTranslations } from 'use-intl'
 
 import { Icon } from '~/components/common/icon'
 import { StackHeader } from '~/components/navigation/header'
 import { TabBar } from '~/components/navigation/tab-bar'
 
 const Layout: FunctionComponent = () => {
+  const t = useTranslations('screen')
+
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +22,7 @@ const Layout: FunctionComponent = () => {
           tabBarIcon: ({ focused }) => (
             <Icon color={focused ? 'primary-9' : 'gray-9'} name="home" />
           ),
-          title: 'Home',
+          title: t('home.title'),
         }}
       />
 
@@ -29,17 +32,7 @@ const Layout: FunctionComponent = () => {
           tabBarIcon: ({ focused }) => (
             <Icon color={focused ? 'primary-9' : 'gray-9'} name="community" />
           ),
-          title: 'Communities',
-        }}
-      />
-
-      <Tabs.Screen
-        name="create"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Icon color={focused ? 'primary-9' : 'gray-9'} name="create" />
-          ),
-          title: 'New post',
+          title: t('communities.title'),
         }}
       />
 
@@ -49,7 +42,7 @@ const Layout: FunctionComponent = () => {
           tabBarIcon: ({ focused }) => (
             <Icon color={focused ? 'primary-9' : 'gray-9'} name="user" />
           ),
-          title: 'Account',
+          title: t('account.title'),
         }}
       />
     </Tabs>

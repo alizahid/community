@@ -16,7 +16,7 @@ const Screen: FunctionComponent = () => {
   const router = useRouter()
 
   const tw = useTailwind()
-  const t = useTranslations('screen.home')
+  const t = useTranslations('screen.landing')
 
   const { session } = useAuth()
 
