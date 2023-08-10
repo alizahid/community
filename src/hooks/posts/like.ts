@@ -58,10 +58,14 @@ export const useLikePost = (post: Post) => {
 
   const queryClient = useQueryClient()
 
-  const updateKeyPosts = ['posts']
-  const updateKeyPost = ['post', post.id]
-  const updateKeyUserPosts = ['user_posts', post.user?.id]
-  const updateKeyCommunityPosts = ['community_posts', post.community?.id]
+  const updateKeyPosts = ['feed', session?.user.id]
+  const updateKeyPost = ['post', post.id, session?.user.id]
+  const updateKeyUserPosts = ['user_posts', post.user?.id, session?.user.id]
+  const updateKeyCommunityPosts = [
+    'community_posts',
+    post.community?.id,
+    session?.user.id,
+  ]
 
   const updateKeys = [
     updateKeyPosts,

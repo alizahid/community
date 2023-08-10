@@ -15,6 +15,7 @@ import { PostSkeleton } from '~/components/skeletons/post'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
+import { type CountColumn } from '~/types'
 
 const Screen: FunctionComponent = () => {
   const params = useLocalSearchParams()
@@ -30,28 +31,27 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
+          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), liked:likes(user_id), likes(count), comments(count)',
         )
+        .eq('liked.user_id', session?.user.id)
         .eq('id', id)
         .single()
 
       if (data) {
         return {
-          comments: data.comments.length,
+          comments: (data.comments as unknown as CountColumn)[0].count,
           community: data.community,
           content: data.content,
           createdAt: parseJSON(data.created_at),
           id: data.id,
-          liked: !!data.likes.find(
-            ({ user_id }) => user_id === session?.user.id,
-          ),
-          likes: data.likes.length,
+          liked: data.liked.length > 0,
+          likes: (data.likes as unknown as CountColumn)[0].count,
           meta: data.meta,
           user: data.user,
         }
       }
     },
-    queryKey: ['post', id],
+    queryKey: ['post', id, session?.user.id],
   })
 
   const comments = useInfiniteQuery<{

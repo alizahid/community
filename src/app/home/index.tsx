@@ -12,6 +12,7 @@ import { PostSkeleton } from '~/components/skeletons/post'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
+import { type CountColumn } from '~/types'
 
 const Screen: FunctionComponent = () => {
   const tw = useTailwind()
@@ -32,8 +33,9 @@ const Screen: FunctionComponent = () => {
       const { data } = await supabase
         .from('posts')
         .select(
-          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), likes(user_id), comments(user_id)',
+          'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), liked:likes(user_id), likes(count), comments(count)',
         )
+        .eq('liked.user_id', session?.user.id)
         .order('created_at', {
           ascending: false,
         })
@@ -47,17 +49,18 @@ const Screen: FunctionComponent = () => {
           content,
           created_at,
           id,
+          liked,
           likes,
           meta,
           user,
         }) => ({
-          comments: comments.length,
+          comments: (comments as unknown as CountColumn)[0].count,
           community,
           content,
           createdAt: parseJSON(created_at),
           id,
-          liked: !!likes.find(({ user_id }) => user_id === session?.user.id),
-          likes: likes.length,
+          liked: liked.length > 0,
+          likes: (likes as unknown as CountColumn)[0].count,
           meta,
           user,
         }),
@@ -70,7 +73,7 @@ const Screen: FunctionComponent = () => {
         posts,
       }
     },
-    queryKey: ['posts'],
+    queryKey: ['feed', session?.user.id],
   })
 
   const data = (posts.data?.pages.map(({ posts }) => posts) ?? []).flat()

@@ -70,6 +70,9 @@ create index index_comments_post on comments(post_id);
 
 create index index_comments_user on comments(user_id);
 
+-- likes
+create index index_likes_post_user on likes(post_id, user_id);
+
 -- rls
 -- 
 -- users

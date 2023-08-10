@@ -76,6 +76,7 @@ export interface Database {
           created_at: string
           description: string
           id: number
+          image: string | null
           name: string
           slug: string
         }
@@ -83,6 +84,7 @@ export interface Database {
           created_at?: string
           description: string
           id?: number
+          image?: string | null
           name: string
           slug: string
         }
@@ -90,6 +92,7 @@ export interface Database {
           created_at?: string
           description?: string
           id?: number
+          image?: string | null
           name?: string
           slug?: string
         }
@@ -206,20 +209,20 @@ export interface Database {
       users: {
         Row: {
           created_at: string
-          email: string
           id: string
+          image: string | null
           username: string
         }
         Insert: {
           created_at?: string
-          email: string
           id: string
+          image?: string | null
           username: string
         }
         Update: {
           created_at?: string
-          email?: string
           id?: string
+          image?: string | null
           username?: string
         }
         Relationships: [
