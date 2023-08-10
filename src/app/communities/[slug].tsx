@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Empty } from '~/components/common/empty'
 import { IconButton } from '~/components/common/icon-button'
+import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { Spinner } from '~/components/common/spinner'
 import { CommunityCard } from '~/components/communities/card'
@@ -138,6 +139,7 @@ const Screen: FunctionComponent = () => {
           posts.fetchNextPage()
         }
       }}
+      refreshControl={<Refresher onRefresh={posts.refetch} />}
       renderItem={({ item }) => <PostCard community={false} post={item} />}
     />
   )

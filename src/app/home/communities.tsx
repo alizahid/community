@@ -2,12 +2,13 @@ import { FlashList } from '@shopify/flash-list'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { type FunctionComponent } from 'react'
 
+import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { type Community, CommunityCard } from '~/components/communities/card'
 import { supabase } from '~/lib/supabase'
 
 const Screen: FunctionComponent = () => {
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<{
+  const communities = useInfiniteQuery<{
     communities: Array<Community>
     cursor?: number
   }>({
@@ -46,20 +47,21 @@ const Screen: FunctionComponent = () => {
     queryKey: ['communities'],
   })
 
-  const communities = (
-    data?.pages.map(({ communities }) => communities) ?? []
+  const data = (
+    communities.data?.pages.map(({ communities }) => communities) ?? []
   ).flat()
 
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
-      data={communities}
+      data={data}
       estimatedItemSize={80}
       onEndReached={() => {
-        if (hasNextPage) {
-          fetchNextPage()
+        if (communities.hasNextPage) {
+          communities.fetchNextPage()
         }
       }}
+      refreshControl={<Refresher onRefresh={communities.refetch} />}
       renderItem={({ item }) => <CommunityCard community={item} />}
     />
   )

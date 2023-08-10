@@ -4,6 +4,7 @@ import { parseJSON } from 'date-fns'
 import { type FunctionComponent } from 'react'
 
 import { Empty } from '~/components/common/empty'
+import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { Spinner } from '~/components/common/spinner'
 import { type Post, PostCard } from '~/components/posts/card'
@@ -90,6 +91,7 @@ const Screen: FunctionComponent = () => {
           posts.fetchNextPage()
         }
       }}
+      refreshControl={<Refresher onRefresh={posts.refetch} />}
       renderItem={({ item }) => <PostCard post={item} />}
     />
   )

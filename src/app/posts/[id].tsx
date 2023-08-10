@@ -6,6 +6,7 @@ import { type FunctionComponent } from 'react'
 
 import { type Comment, CommentCard } from '~/components/comments/card'
 import { Empty } from '~/components/common/empty'
+import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { Spinner } from '~/components/common/spinner'
 import { PostCard } from '~/components/posts/card'
@@ -125,6 +126,7 @@ const Screen: FunctionComponent = () => {
           comments.fetchNextPage()
         }
       }}
+      refreshControl={<Refresher onRefresh={comments.refetch} />}
       renderItem={({ item }) => <CommentCard comment={item} />}
     />
   )
