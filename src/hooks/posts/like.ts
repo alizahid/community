@@ -8,50 +8,7 @@ import { produce } from 'immer'
 import { type Post } from '~/components/posts/card'
 import { supabase } from '~/lib/supabase'
 import { useAuth } from '~/providers/auth'
-
-type PostCollection = {
-  cursor?: number
-  posts: Array<Post>
-}
-
-const updateCollection = (
-  postId: number,
-  data?: InfiniteData<PostCollection>,
-) => {
-  if (!data) {
-    return
-  }
-
-  return produce(data, (next) => {
-    const page = next.pages.find(({ posts }) =>
-      posts.find(({ id }) => id === postId),
-    )
-
-    if (!page) {
-      return
-    }
-
-    const post = page.posts.find(({ id }) => id === postId)
-
-    if (post) {
-      post.liked = !post.liked
-      post.likes += post.liked ? 1 : -1
-    }
-  })
-}
-
-const updateOne = (post?: Post) => {
-  if (!post) {
-    return
-  }
-
-  return produce(post, (next) => {
-    if (next) {
-      next.liked = !next.liked
-      next.likes += next.liked ? 1 : -1
-    }
-  })
-}
+import { type PostCollection } from '~/types'
 
 export const useLikePost = (post: Post) => {
   const { session } = useAuth()
@@ -137,4 +94,43 @@ export const useLikePost = (post: Post) => {
     likePost: mutate,
     loading: isLoading,
   }
+}
+
+const updateCollection = (
+  postId: number,
+  data?: InfiniteData<PostCollection>,
+) => {
+  if (!data) {
+    return
+  }
+
+  return produce(data, (next) => {
+    const page = next.pages.find(({ posts }) =>
+      posts.find(({ id }) => id === postId),
+    )
+
+    if (!page) {
+      return
+    }
+
+    const post = page.posts.find(({ id }) => id === postId)
+
+    if (post) {
+      post.liked = !post.liked
+      post.likes += post.liked ? 1 : -1
+    }
+  })
+}
+
+const updateOne = (post?: Post) => {
+  if (!post) {
+    return
+  }
+
+  return produce(post, (next) => {
+    if (next) {
+      next.liked = !next.liked
+      next.likes += next.liked ? 1 : -1
+    }
+  })
 }

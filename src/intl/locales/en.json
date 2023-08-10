@@ -1,5 +1,12 @@
 {
   "component": {
+    "comments": {
+      "form": {
+        "content": {
+          "placeholder": "Say something nice"
+        }
+      }
+    },
     "common": {
       "empty": {
         "description": "Looks like there's nothing here."

@@ -14,6 +14,7 @@ import { Spinner } from './spinner'
 
 type Props = {
   color?: TailwindColor
+  disabled?: boolean
   loading?: boolean
   name: IconName
   style?: StyleProp<ViewStyle>
@@ -24,6 +25,7 @@ type Props = {
 
 export const IconButton: FunctionComponent<Props> = ({
   color = 'gray-12',
+  disabled,
   loading,
   name,
   onPress,
@@ -34,7 +36,7 @@ export const IconButton: FunctionComponent<Props> = ({
 
   return (
     <Pressable
-      disabled={loading}
+      disabled={loading || disabled}
       onPress={onPress}
       style={[tw`h-12 w-12 items-center justify-center`, style]}
     >
