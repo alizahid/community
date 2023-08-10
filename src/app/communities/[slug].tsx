@@ -5,10 +5,14 @@ import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
 import { type FunctionComponent, useEffect } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { Empty } from '~/components/common/empty'
 import { IconButton } from '~/components/common/icon-button'
 import { Separator } from '~/components/common/separator'
+import { Spinner } from '~/components/common/spinner'
 import { CommunityCard } from '~/components/communities/card'
 import { type Post, PostCard } from '~/components/posts/card'
+import { CommunitySkeleton } from '~/components/skeletons/community'
+import { PostSkeleton } from '~/components/skeletons/post'
 import { useCommunity } from '~/hooks/communities/get'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
@@ -108,6 +112,12 @@ const Screen: FunctionComponent = () => {
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
+      ListEmptyComponent={() =>
+        posts.isLoading ? <PostSkeleton /> : <Empty />
+      }
+      ListFooterComponent={() =>
+        posts.isFetchingNextPage ? <Spinner style={tw`my-4`} /> : null
+      }
       ListHeaderComponent={() =>
         community ? (
           <CommunityCard
@@ -116,7 +126,9 @@ const Screen: FunctionComponent = () => {
             membership
             style={tw`border-gray-6 border-b-2`}
           />
-        ) : null
+        ) : (
+          <CommunitySkeleton style={tw`border-gray-6 border-b-2`} />
+        )
       }
       contentContainerStyle={tw`pb-[${insets.bottom}px]`}
       data={data}

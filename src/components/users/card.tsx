@@ -41,7 +41,7 @@ export const UserCard: FunctionComponent<Props> = ({
     >
       <Avatar name={user.username} variant="user" />
 
-      <View style={tw`flex-1`}>
+      <View style={tw`flex-1 gap-2`}>
         <Typography weight="medium">{user.username}</Typography>
 
         <Typography color="gray-11" size="sm">

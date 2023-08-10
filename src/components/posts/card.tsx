@@ -62,7 +62,7 @@ export const PostCard: FunctionComponent<Props> = ({
     <View style={[tw`flex-row`, style]}>
       <Pressable
         onPress={() => likePost()}
-        style={tw`items-center justify-center gap-2 w-12`}
+        style={tw`items-center py-4 gap-2 w-12`}
       >
         <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
 
@@ -80,7 +80,7 @@ export const PostCard: FunctionComponent<Props> = ({
 
       <Main
         onPress={() => router.push(`/posts/${post.id}`)}
-        style={tw`flex-1 gap-2 py-4 pr-4`}
+        style={tw`flex-1 gap-4 py-4 pr-4`}
       >
         {community && (
           <Pressable
@@ -89,7 +89,7 @@ export const PostCard: FunctionComponent<Props> = ({
           >
             <Avatar name={post.community?.slug!} style={tw`h-4 w-4`} />
 
-            <Typography color="gray-11" size="xs" weight="medium">
+            <Typography color="gray-11" size="sm" weight="medium">
               {post.community?.name}
             </Typography>
           </Pressable>

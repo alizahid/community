@@ -3,12 +3,18 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
 import { type FunctionComponent } from 'react'
 
+import { Empty } from '~/components/common/empty'
 import { Separator } from '~/components/common/separator'
+import { Spinner } from '~/components/common/spinner'
 import { type Post, PostCard } from '~/components/posts/card'
+import { PostSkeleton } from '~/components/skeletons/post'
 import { supabase } from '~/lib/supabase'
+import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
 
 const Screen: FunctionComponent = () => {
+  const tw = useTailwind()
+
   const { session } = useAuth()
 
   const posts = useInfiniteQuery<{
@@ -71,6 +77,12 @@ const Screen: FunctionComponent = () => {
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
+      ListEmptyComponent={() =>
+        posts.isLoading ? <PostSkeleton /> : <Empty />
+      }
+      ListFooterComponent={() =>
+        posts.isFetchingNextPage ? <Spinner style={tw`my-4`} /> : null
+      }
       data={data}
       estimatedItemSize={108}
       onEndReached={() => {

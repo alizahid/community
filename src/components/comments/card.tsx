@@ -33,7 +33,7 @@ export const CommentCard: FunctionComponent<Props> = ({ comment, style }) => {
   const tw = useTailwind()
 
   return (
-    <View style={[tw`flex-row items-center gap-4 p-4`, style]}>
+    <View style={[tw`flex-row gap-4 p-4`, style]}>
       <Avatar
         name={comment.user?.username!}
         style={tw`h-6 w-6`}

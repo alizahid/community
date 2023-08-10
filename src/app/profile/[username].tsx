@@ -5,8 +5,12 @@ import { useLocalSearchParams, useNavigation } from 'expo-router'
 import { type FunctionComponent, useEffect } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { Empty } from '~/components/common/empty'
 import { Separator } from '~/components/common/separator'
+import { Spinner } from '~/components/common/spinner'
 import { type Post, PostCard } from '~/components/posts/card'
+import { PostSkeleton } from '~/components/skeletons/post'
+import { UserSkeleton } from '~/components/skeletons/user'
 import { UserCard } from '~/components/users/card'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
@@ -115,6 +119,12 @@ const Screen: FunctionComponent = () => {
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
+      ListEmptyComponent={() =>
+        posts.isLoading ? <PostSkeleton count={3} /> : <Empty />
+      }
+      ListFooterComponent={() =>
+        posts.isFetchingNextPage ? <Spinner style={tw`my-4`} /> : null
+      }
       ListHeaderComponent={() =>
         user.data ? (
           <UserCard
@@ -122,7 +132,9 @@ const Screen: FunctionComponent = () => {
             style={tw`border-gray-6 border-b-2`}
             user={user.data}
           />
-        ) : null
+        ) : (
+          <UserSkeleton style={tw`border-gray-6 border-b-2`} />
+        )
       }
       contentContainerStyle={tw`pb-[${insets.bottom}px]`}
       data={data}

@@ -5,8 +5,12 @@ import { useLocalSearchParams } from 'expo-router'
 import { type FunctionComponent } from 'react'
 
 import { type Comment, CommentCard } from '~/components/comments/card'
+import { Empty } from '~/components/common/empty'
 import { Separator } from '~/components/common/separator'
+import { Spinner } from '~/components/common/spinner'
 import { PostCard } from '~/components/posts/card'
+import { CommentSkeleton } from '~/components/skeletons/comment'
+import { PostSkeleton } from '~/components/skeletons/post'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
@@ -97,6 +101,12 @@ const Screen: FunctionComponent = () => {
   return (
     <FlashList
       ItemSeparatorComponent={Separator}
+      ListEmptyComponent={() =>
+        comments.isLoading ? <CommentSkeleton /> : <Empty />
+      }
+      ListFooterComponent={() =>
+        comments.isFetchingNextPage ? <Spinner style={tw`my-4`} /> : null
+      }
       ListHeaderComponent={() =>
         post.data ? (
           <PostCard
@@ -104,7 +114,9 @@ const Screen: FunctionComponent = () => {
             post={post.data}
             style={tw`border-gray-6 border-b-2`}
           />
-        ) : null
+        ) : (
+          <PostSkeleton count={1} style={tw`border-gray-6 border-b-2`} />
+        )
       }
       data={data}
       estimatedItemSize={108}

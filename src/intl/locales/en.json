@@ -1,5 +1,10 @@
 {
   "component": {
+    "common": {
+      "empty": {
+        "description": "Looks like there's nothing here."
+      }
+    },
     "communities": {
       "card": {
         "join": "Join",
