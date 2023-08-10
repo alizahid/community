@@ -30,6 +30,8 @@ export const Gallery: FunctionComponent<Props> = ({ images, style }) => {
     return null
   }
 
+  const padding = insets.bottom + getSpace(tw, 4)
+
   return (
     <>
       <View style={[tw`flex-row flex-wrap gap-2`, style]}>
@@ -61,9 +63,7 @@ export const Gallery: FunctionComponent<Props> = ({ images, style }) => {
         ref={viewer}
         renderCustomComponent={({ index }) => (
           <View
-            style={tw`absolute gap-1 w-full flex-row justify-center bottom-[${
-              insets.bottom + getSpace(tw, 4)
-            }px]`}
+            style={tw`absolute gap-1 w-full flex-row justify-center bottom-[${padding}px]`}
           >
             {range(images.length).map((_, item) => (
               <View

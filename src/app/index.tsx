@@ -34,8 +34,10 @@ const Screen: FunctionComponent = () => {
     return <Redirect href="/home/" />
   }
 
+  const padding = insets.bottom + getSpace(tw, 4)
+
   return (
-    <View style={tw`flex-1 pb-[${insets.bottom + getSpace(tw, 4)}px]`}>
+    <View style={tw`flex-1 pb-[${padding}px]`}>
       <View style={tw`flex-1 gap-4 items-center justify-center`}>
         <Logo />
 

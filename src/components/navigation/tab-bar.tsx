@@ -29,6 +29,9 @@ export const TabBar: FunctionComponent<Props> = ({
     return null
   }
 
+  const padding = insets.bottom
+  const height = getSpace(tw, 12) + insets.bottom
+
   return (
     <View style={tw`flex-row border-t border-gray-6 bg-gray-1`}>
       {state.routes.map((route, index) => {
@@ -65,9 +68,7 @@ export const TabBar: FunctionComponent<Props> = ({
             key={route.key}
             onLongPress={onLongPress}
             onPress={onPress}
-            style={tw`flex-1 items-center justify-center pb-[${
-              insets.bottom
-            }px] h-[${getSpace(tw, 12) + insets.bottom}px]`}
+            style={tw`flex-1 items-center justify-center pb-[${padding}px] h-[${height}px]`}
           >
             <View>
               {data.options?.tabBarIcon?.({

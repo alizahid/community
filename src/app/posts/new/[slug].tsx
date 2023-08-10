@@ -29,7 +29,7 @@ const Screen: FunctionComponent = () => {
 
   const t = useTranslations('screen.posts.new')
 
-  const { visible } = useKeyboard()
+  const keyboard = useKeyboard()
 
   const { community } = useCommunity(slug)
   const { createPost, error, loading } = useCreatePost()
@@ -46,7 +46,9 @@ const Screen: FunctionComponent = () => {
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
+    keyboard.dismiss()
+
     if (loading) {
       return
     }
@@ -54,11 +56,11 @@ const Screen: FunctionComponent = () => {
     createPost(data)
   })
 
+  const padding = (keyboard.visible ? 0 : insets.bottom) + getSpace(tw, 4)
+
   return (
     <ScrollView
-      contentContainerStyle={tw`flex-1 gap-4 p-4 pb-[${
-        (visible ? 0 : insets.bottom) + getSpace(tw, 4)
-      }px]`}
+      contentContainerStyle={tw`flex-1 gap-4 p-4 pb-[${padding}px]`}
       keyboardDismissMode="on-drag"
       keyboardShouldPersistTaps="handled"
     >
