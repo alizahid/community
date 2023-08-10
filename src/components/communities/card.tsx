@@ -5,19 +5,12 @@ import { useTranslations } from 'use-intl'
 
 import { useJoinCommunity } from '~/hooks/communities/join'
 import { useTailwind } from '~/lib/tailwind'
+import { type Community } from '~/types'
 
 import { Avatar } from '../common/avatar'
 import { Button } from '../common/button'
 import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
-
-export type Community = {
-  description: string
-  id: number
-  member?: boolean
-  name: string
-  slug: string
-}
 
 type Props = {
   community: Community

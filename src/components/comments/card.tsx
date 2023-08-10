@@ -4,21 +4,12 @@ import { type StyleProp, View, type ViewStyle } from 'react-native'
 import { useFormatter } from 'use-intl'
 
 import { useTailwind } from '~/lib/tailwind'
+import { type Comment } from '~/types'
 
 import { Avatar } from '../common/avatar'
 import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
-
-export type Comment = {
-  content: string
-  createdAt: Date
-  id: number
-  user: {
-    id: string
-    username: string
-  } | null
-}
 
 type Props = {
   comment: Comment

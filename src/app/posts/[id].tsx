@@ -4,7 +4,7 @@ import { parseJSON } from 'date-fns'
 import { useLocalSearchParams } from 'expo-router'
 import { type FunctionComponent } from 'react'
 
-import { type Comment, CommentCard } from '~/components/comments/card'
+import { CommentCard } from '~/components/comments/card'
 import { CommentForm } from '~/components/comments/form'
 import { Empty } from '~/components/common/empty'
 import { Refresher } from '~/components/common/refresh'
@@ -16,7 +16,7 @@ import { PostSkeleton } from '~/components/skeletons/post'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
-import { type CountColumn } from '~/types'
+import { type CommentCollection, type CountColumn } from '~/types'
 
 const Screen: FunctionComponent = () => {
   const params = useLocalSearchParams()
@@ -55,10 +55,7 @@ const Screen: FunctionComponent = () => {
     queryKey: ['post', id, session?.user.id],
   })
 
-  const comments = useInfiniteQuery<{
-    comments: Array<Comment>
-    cursor?: number
-  }>({
+  const comments = useInfiniteQuery<CommentCollection>({
     enabled: !!post.data,
     getNextPageParam: ({ cursor }) => cursor,
     queryFn: async ({ pageParam = 0 }) => {

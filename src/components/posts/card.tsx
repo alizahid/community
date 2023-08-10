@@ -6,32 +6,13 @@ import { useFormatter } from 'use-intl'
 import { postMeta } from '~/hooks/posts/create'
 import { useLikePost } from '~/hooks/posts/like'
 import { useTailwind } from '~/lib/tailwind'
-import { type Json } from '~/types/supabase'
+import { type Post } from '~/types'
 
 import { Avatar } from '../common/avatar'
 import { Icon } from '../common/icon'
 import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
 import { Gallery } from './gallery'
-
-export type Post = {
-  comments: number
-  community: {
-    id: number
-    name: string
-    slug: string
-  } | null
-  content: string
-  createdAt: Date
-  id: number
-  liked: boolean
-  likes: number
-  meta: Json
-  user: {
-    id: string
-    username: string
-  } | null
-}
 
 type Props = {
   community?: boolean

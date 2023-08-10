@@ -4,14 +4,12 @@ import { type FunctionComponent } from 'react'
 
 import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
-import { type Community, CommunityCard } from '~/components/communities/card'
+import { CommunityCard } from '~/components/communities/card'
 import { supabase } from '~/lib/supabase'
+import { type CommunityCollection } from '~/types'
 
 const Screen: FunctionComponent = () => {
-  const communities = useInfiniteQuery<{
-    communities: Array<Community>
-    cursor?: number
-  }>({
+  const communities = useInfiniteQuery<CommunityCollection>({
     getNextPageParam: ({ cursor }) => cursor,
     queryFn: async ({ pageParam = 0 }) => {
       const limit = 10

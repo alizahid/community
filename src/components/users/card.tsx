@@ -4,16 +4,11 @@ import { type StyleProp, View, type ViewStyle } from 'react-native'
 import { useTranslations } from 'use-intl'
 
 import { useTailwind } from '~/lib/tailwind'
+import { type User } from '~/types'
 
 import { Avatar } from '../common/avatar'
 import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
-
-export type User = {
-  createdAt: Date
-  id: string
-  username: string
-}
 
 type Props = {
   user: User

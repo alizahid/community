@@ -1,5 +1,5 @@
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
-import { useCallback, useState } from 'react'
 import { z } from 'zod'
 
 import { supabase } from '~/lib/supabase'
@@ -15,42 +15,29 @@ export type Form = z.infer<typeof schema>
 export const useSignUp = () => {
   const router = useRouter()
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string>()
-
-  const signUp = useCallback(
-    async ({ email, password, username }: Form) => {
-      try {
-        setLoading(true)
-        setError(undefined)
-
-        const { error } = await supabase.auth.signUp({
-          email,
-          options: {
-            data: {
-              username,
-            },
+  const { error, isLoading, mutate } = useMutation<void, Error, Form>({
+    mutationFn: async ({ email, password, username }) => {
+      const { error } = await supabase.auth.signUp({
+        email,
+        options: {
+          data: {
+            username,
           },
-          password,
-        })
+        },
+        password,
+      })
 
-        if (error) {
-          throw error
-        }
-
-        router.replace('/home/')
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
+      if (error) {
+        throw error
       }
+
+      router.replace('/home/')
     },
-    [router],
-  )
+  })
 
   return {
-    error,
-    loading,
-    signUp,
+    error: error?.message,
+    loading: isLoading,
+    signUp: mutate,
   }
 }

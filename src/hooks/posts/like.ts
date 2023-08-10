@@ -5,10 +5,9 @@ import {
 } from '@tanstack/react-query'
 import { produce } from 'immer'
 
-import { type Post } from '~/components/posts/card'
 import { supabase } from '~/lib/supabase'
 import { useAuth } from '~/providers/auth'
-import { type PostCollection } from '~/types'
+import { type Post, type PostCollection } from '~/types'
 
 export const useLikePost = (post: Post) => {
   const { session } = useAuth()

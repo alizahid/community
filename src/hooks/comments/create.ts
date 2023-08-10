@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
 import { z } from 'zod'
 
-import { type Post } from '~/components/posts/card'
 import { supabase } from '~/lib/supabase'
 import { useAuth } from '~/providers/auth'
+import { type Post } from '~/types'
 
 export const schema = z.object({
   content: z.string().min(4),

@@ -18,7 +18,7 @@ const Screen: FunctionComponent = () => {
   const tw = useTailwind()
   const t = useTranslations('screen.auth.signUp')
 
-  const { visible } = useKeyboard()
+  const keyboard = useKeyboard()
 
   const { error, loading, signUp } = useSignUp()
 
@@ -31,19 +31,21 @@ const Screen: FunctionComponent = () => {
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
+    keyboard.dismiss()
+
     if (loading) {
       return
     }
 
-    await signUp(data)
+    signUp(data)
   })
+
+  const padding = (keyboard.visible ? 0 : insets.bottom) + getSpace(tw, 4)
 
   return (
     <ScrollView
-      contentContainerStyle={tw`flex-1 justify-end gap-4 p-4 pb-[${
-        (visible ? 0 : insets.bottom) + getSpace(tw, 4)
-      }px]`}
+      contentContainerStyle={tw`flex-1 justify-end gap-4 p-4 pb-[${padding}px]`}
       keyboardDismissMode="on-drag"
       keyboardShouldPersistTaps="handled"
     >

@@ -8,10 +8,10 @@ import { useTranslations } from 'use-intl'
 import { type Form, schema, useCreateComment } from '~/hooks/comments/create'
 import { useKeyboard } from '~/hooks/keyboard'
 import { getSpace, useTailwind } from '~/lib/tailwind'
+import { type Post } from '~/types'
 
 import { IconButton } from '../common/icon-button'
 import { Input } from '../common/input'
-import { type Post } from '../posts/card'
 
 export type CommentFormComponent = {
   focus: () => void
@@ -49,6 +49,10 @@ export const CommentForm = forwardRef<CommentFormComponent, Props>(
 
     const onSubmit = handleSubmit(async (data) => {
       keyboard.dismiss()
+
+      if (loading) {
+        return
+      }
 
       await createComment(data)
 

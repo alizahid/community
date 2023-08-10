@@ -47,7 +47,7 @@ const Screen: FunctionComponent = () => {
         <Spinner />
       )}
 
-      <Button loading={loading} onPress={signOut}>
+      <Button loading={loading} onPress={() => signOut()}>
         Sign out
       </Button>
     </View>

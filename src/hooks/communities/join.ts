@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { type Community } from '~/components/communities/card'
 import { supabase } from '~/lib/supabase'
 import { useAuth } from '~/providers/auth'
+import { type Community } from '~/types'
 
 export const useJoinCommunity = (community: Community) => {
   const { session } = useAuth()

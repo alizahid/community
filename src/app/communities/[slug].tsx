@@ -11,14 +11,14 @@ import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { Spinner } from '~/components/common/spinner'
 import { CommunityCard } from '~/components/communities/card'
-import { type Post, PostCard } from '~/components/posts/card'
+import { PostCard } from '~/components/posts/card'
 import { CommunitySkeleton } from '~/components/skeletons/community'
 import { PostSkeleton } from '~/components/skeletons/post'
 import { useCommunity } from '~/hooks/communities/get'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
-import { type CountColumn } from '~/types'
+import { type CountColumn, type PostCollection } from '~/types'
 
 const Screen: FunctionComponent = () => {
   const insets = useSafeAreaInsets()
@@ -52,10 +52,7 @@ const Screen: FunctionComponent = () => {
     })
   }, [community, navigation, router])
 
-  const posts = useInfiniteQuery<{
-    cursor?: number
-    posts: Array<Post>
-  }>({
+  const posts = useInfiniteQuery<PostCollection>({
     enabled: !!community,
     getNextPageParam: ({ cursor }) => cursor,
     queryFn: async ({ pageParam = 0 }) => {

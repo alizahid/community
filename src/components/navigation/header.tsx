@@ -27,7 +27,9 @@ export const StackHeader: FunctionComponent<Props> = ({
           <View style={tw`absolute bottom-0 left-0 flex-row`}>
             {options.headerLeft?.({
               canGoBack: navigation.canGoBack(),
-            }) ?? <IconButton name="left" onPress={navigation.goBack} />}
+            }) ?? (
+              <IconButton name="left" onPress={() => navigation.goBack()} />
+            )}
           </View>
         )}
 
