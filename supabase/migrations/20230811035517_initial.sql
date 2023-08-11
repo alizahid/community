@@ -194,3 +194,19 @@ insert on communities for each row execute procedure handle_new_community();
 create trigger on_post_created
 after
 insert on posts for EACH row execute function handle_new_post();
+
+-- search
+-- 
+-- communities
+alter table communities
+add column search tsvector generated always as (
+        to_tsvector('english', name || ' ' || description)
+    ) stored;
+
+create index index_communities_search on communities using gin (search);
+
+-- posts
+alter table posts
+add column search tsvector generated always as (to_tsvector('english', content)) stored;
+
+create index index_posts_search on posts using gin (search);

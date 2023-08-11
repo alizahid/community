@@ -9,7 +9,15 @@ import { useTailwind } from '~/lib/tailwind'
 
 import { Typography } from './typography'
 
-export const Empty: FunctionComponent = () => {
+type Props = {
+  animation?: boolean
+  description?: string
+}
+
+export const Empty: FunctionComponent<Props> = ({
+  animation = true,
+  description,
+}) => {
   const frame = useSafeAreaFrame()
 
   const t = useTranslations('component.common.empty')
@@ -20,14 +28,16 @@ export const Empty: FunctionComponent = () => {
 
   return (
     <View style={tw`flex-col justify-center items-center py-4 flex-1`}>
-      <Lottie
-        autoPlay
-        resizeMode="contain"
-        source={lottie_empty}
-        style={tw`h-[${size}px] w-[${size}px]`}
-      />
+      {animation && (
+        <Lottie
+          autoPlay
+          resizeMode="contain"
+          source={lottie_empty}
+          style={tw`h-[${size}px] w-[${size}px]`}
+        />
+      )}
 
-      <Typography>{t('description')}</Typography>
+      <Typography>{description ?? t('description')}</Typography>
     </View>
   )
 }

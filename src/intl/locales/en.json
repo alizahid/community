@@ -85,6 +85,13 @@
       },
       "index": {
         "title": "Home"
+      },
+      "search": {
+        "communities": "Communities",
+        "placeholder": "Search",
+        "posts": "Posts",
+        "start": "Start your search.",
+        "title": "Search"
       }
     },
     "landing": {
@@ -108,8 +115,10 @@
         "title": "Post"
       }
     },
-    "profile": {
-      "title": "Loading"
+    "users": {
+      "profile": {
+        "title": "Loading"
+      }
     }
   }
 }

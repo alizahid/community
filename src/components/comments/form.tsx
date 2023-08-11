@@ -74,7 +74,7 @@ export const CommentForm = forwardRef<CommentFormComponent, Props>(
               placeholder={t('content.placeholder')}
               returnKeyType="go"
               style={tw`flex-1`}
-              styleInput={tw`border-0 bg-transparent h-[${height}px] pb-[${padding}px]`}
+              styleInput={tw`border-0 rounded-none bg-transparent h-[${height}px] pb-[${padding}px]`}
             />
           )}
           rules={{

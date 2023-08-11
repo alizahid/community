@@ -71,7 +71,7 @@ export const Root: FunctionComponent = () => {
       <Stack.Screen
         name="profile/[username]"
         options={{
-          title: t('profile.title'),
+          title: t('users.profile.title'),
         }}
       />
     </Stack>
