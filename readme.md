@@ -71,7 +71,7 @@ Start up the app with `yarn dev` and enjoy!
 
 ## Tech
 
-Community is built with [Expo](https://expo.dev) and [Supabase](https://supabase.com) and styled with [Tailwind CSS](https://tailwindcss.com).
+Community is written in [TypeScript](https://www.typescriptlang.org) and built with [Expo](https://expo.dev) and [Supabase](https://supabase.com) and styled with [Tailwind CSS](https://tailwindcss.com).
 
 ### Supabase
 
@@ -83,6 +83,6 @@ Community is built with [Expo](https://expo.dev) and [Supabase](https://supabase
 
 ## Team
 
-| Name      | GitHub                                  | Twitter                                    | Website                              |
-| --------- | --------------------------------------- | ------------------------------------------ | ------------------------------------ |
-| Ali Zahid | [alizahid](https://github.com/alizahid) | [alizahid0](https://twitter.com/alizahid0) | [alizahid.dev](https://alizahid.dev) |
+| Name                              | GitHub                                  | Twitter                                    |
+| --------------------------------- | --------------------------------------- | ------------------------------------------ |
+| [Ali Zahid](https://alizahid.dev) | [alizahid](https://github.com/alizahid) | [alizahid0](https://twitter.com/alizahid0) |
