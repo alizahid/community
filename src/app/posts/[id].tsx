@@ -151,7 +151,7 @@ const Screen: FunctionComponent = () => {
           }
         }}
         refreshControl={<Refresher onRefresh={comments.refetch} />}
-        renderItem={({ item }) => <CommentCard comment={item} />}
+        renderItem={({ item }) => <CommentCard comment={item} postId={id} />}
       />
 
       {post.data && <CommentForm post={post.data} />}

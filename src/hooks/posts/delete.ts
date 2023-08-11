@@ -37,7 +37,11 @@ export const useDeletePost = (post?: Post) => {
         return
       }
 
-      await supabase.from('posts').delete().eq('id', post.id)
+      const { error } = await supabase.from('posts').delete().eq('id', post.id)
+
+      if (error) {
+        throw error
+      }
 
       router.back()
     },
