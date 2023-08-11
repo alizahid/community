@@ -32,7 +32,7 @@ const Screen: FunctionComponent = () => {
 
   const post = useQuery({
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('posts')
         .select(
           'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), liked:likes(user_id), likes(count), comments(count)',
@@ -41,18 +41,20 @@ const Screen: FunctionComponent = () => {
         .eq('id', id)
         .single()
 
-      if (data) {
-        return {
-          comments: (data.comments as unknown as CountColumn)[0].count,
-          community: data.community,
-          content: data.content,
-          createdAt: parseJSON(data.created_at),
-          id: data.id,
-          liked: data.liked.length > 0,
-          likes: (data.likes as unknown as CountColumn)[0].count,
-          meta: data.meta,
-          user: data.user,
-        }
+      if (error) {
+        throw error
+      }
+
+      return {
+        comments: (data.comments as unknown as CountColumn)[0].count,
+        community: data.community,
+        content: data.content,
+        createdAt: parseJSON(data.created_at),
+        id: data.id,
+        liked: data.liked.length > 0,
+        likes: (data.likes as unknown as CountColumn)[0].count,
+        meta: data.meta,
+        user: data.user,
       }
     },
     queryKey: ['post', id, session?.user.id],

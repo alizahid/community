@@ -32,18 +32,20 @@ const Screen: FunctionComponent = () => {
 
   const user = useQuery({
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('users')
         .select('id, username, created_at')
         .eq('username', username)
         .single()
 
-      if (data) {
-        return {
-          createdAt: parseJSON(data.created_at),
-          id: data.id,
-          username: data.username,
-        }
+      if (error) {
+        throw error
+      }
+
+      return {
+        createdAt: parseJSON(data.created_at),
+        id: data.id,
+        username: data.username,
       }
     },
     queryKey: ['profile', username],

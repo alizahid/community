@@ -2,31 +2,37 @@ import { useQuery } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
 import { type FunctionComponent } from 'react'
 import { View } from 'react-native'
-import { useFormatter } from 'use-intl'
 
 import { Button } from '~/components/common/button'
 import { Spinner } from '~/components/common/spinner'
-import { Typography } from '~/components/common/typography'
+import { UserCard } from '~/components/users/card'
 import { useSignOut } from '~/hooks/auth/sign-out'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
 
 const Screen: FunctionComponent = () => {
-  const formatter = useFormatter()
-
   const { session } = useAuth()
   const { loading, signOut } = useSignOut()
 
   const { data } = useQuery({
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('users')
-        .select('*')
+        .select('id, username, image, created_at')
         .eq('id', session?.user.id)
         .single()
 
-      return data
+      if (error) {
+        throw error
+      }
+
+      return {
+        createdAt: parseJSON(data.created_at),
+        id: data.id,
+        image: data.image,
+        username: data.username,
+      }
     },
     queryKey: ['profile', session?.user.id],
   })
@@ -34,20 +40,16 @@ const Screen: FunctionComponent = () => {
   const tw = useTailwind()
 
   return (
-    <View style={tw`flex-1 gap-8 items-center justify-center`}>
-      {data ? (
-        <View style={tw`gap-2 items-center`}>
-          <Typography>{data.username}</Typography>
+    <View style={tw`flex-1 gap-4`}>
+      {data ? <UserCard user={data} /> : <Spinner />}
 
-          <Typography>
-            {formatter.relativeTime(parseJSON(data.created_at))}
-          </Typography>
-        </View>
-      ) : (
-        <Spinner />
-      )}
-
-      <Button loading={loading} onPress={() => signOut()}>
+      <Button
+        loading={loading}
+        onPress={() => signOut()}
+        style={tw`m-4 mt-auto border border-red-7`}
+        styleLabel={tw`text-red-11`}
+        variant="text"
+      >
         Sign out
       </Button>
     </View>

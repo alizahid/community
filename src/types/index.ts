@@ -9,6 +9,7 @@ export type CountColumn = [
 export type User = {
   createdAt: Date
   id: string
+  image?: string | null
   username: string
 }
 
@@ -16,6 +17,7 @@ export type Community = {
   admin?: boolean
   description: string
   id: number
+  image?: string | null
   member?: boolean
   name: string
   slug: string

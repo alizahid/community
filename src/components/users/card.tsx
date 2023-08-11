@@ -11,9 +11,9 @@ import { Pressable } from '../common/pressable'
 import { Typography } from '../common/typography'
 
 type Props = {
-  user: User
   linked?: boolean
   style?: StyleProp<ViewStyle>
+  user: User
 }
 
 export const UserCard: FunctionComponent<Props> = ({
