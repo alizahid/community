@@ -49,7 +49,7 @@ export const CommunityCard: FunctionComponent<Props> = ({
           {community.description}
         </Typography>
 
-        {membership && (
+        {membership && !community.admin && (
           <Button
             loading={loading}
             onPress={() => joinCommunity()}

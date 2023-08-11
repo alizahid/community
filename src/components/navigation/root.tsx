@@ -41,6 +41,13 @@ export const Root: FunctionComponent = () => {
       />
 
       <Stack.Screen
+        name="communities/new"
+        options={{
+          title: t('communities.new.title'),
+        }}
+      />
+
+      <Stack.Screen
         name="communities/[slug]"
         options={{
           title: t('communities.community.title'),

@@ -22,8 +22,8 @@ export const useCreateComment = (post: Post) => {
 
   const updateKeys = [updateKeyComments, updateKeyPost]
 
-  const { isLoading, mutateAsync } = useMutation({
-    mutationFn: async ({ content }: Form) => {
+  const { isLoading, mutateAsync } = useMutation<unknown, Error, Form>({
+    mutationFn: async ({ content }) => {
       const userId = session?.user.id
 
       if (!userId) {

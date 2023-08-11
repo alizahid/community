@@ -62,6 +62,17 @@
         "title": "Loading"
       },
       "new": {
+        "form": {
+          "description": {
+            "label": "What is this community about?",
+            "placeholder": "We'll discuss cool things"
+          },
+          "name": {
+            "label": "Pick a name for your community",
+            "placeholder": "Cool community"
+          },
+          "submit": "Submit"
+        },
         "title": "New community"
       }
     },

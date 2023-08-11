@@ -13,6 +13,7 @@ export type User = {
 }
 
 export type Community = {
+  admin?: boolean
   description: string
   id: number
   member?: boolean

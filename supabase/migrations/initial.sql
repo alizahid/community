@@ -93,6 +93,20 @@ alter table communities enable row level security;
 create policy "Users can view all communities" on communities as permissive for
 select to authenticated using (true);
 
+create policy "Users can create communities" on communities as permissive for
+insert to authenticated with check (true);
+
+-- communities
+alter table members enable row level security;
+
+create policy "Users can view all members" on members as permissive for
+select to authenticated using (true);
+
+create policy "Users can join communities" on members as permissive for
+insert to authenticated with check ((auth.uid() = user_id));
+
+create policy "Users can leave communities" on members as permissive for delete to authenticated using ((auth.uid() = user_id));
+
 -- posts
 alter table posts enable row level security;
 
@@ -128,17 +142,6 @@ create policy "Users can delete their likes" on likes as permissive for delete t
 
 -- functions
 -- 
--- handle_new_post
-create or replace function handle_new_post() returns trigger LANGUAGE plpgsql security definer as $function$ begin
-insert into public.likes (post_id, user_id)
-values (new.id, auth.uid());
-
-return new;
-
-end;
-
-$function$;
-
 -- handle_new_user
 create or replace function handle_new_user() returns trigger LANGUAGE plpgsql security definer as $function$ begin
 insert into public.users (id, username)
@@ -153,12 +156,39 @@ end;
 
 $function$;
 
+-- handle_new_community
+create or replace function handle_new_community() returns trigger LANGUAGE plpgsql security definer as $function$ begin
+insert into members (community_id, user_id, role)
+values (new.id, auth.uid(), 'admin');
+
+return new;
+
+end;
+
+$function$;
+
+-- handle_new_post
+create or replace function handle_new_post() returns trigger LANGUAGE plpgsql security definer as $function$ begin
+insert into public.likes (post_id, user_id)
+values (new.id, auth.uid());
+
+return new;
+
+end;
+
+$function$;
+
 -- triggers
 -- 
 -- on_user_created
 create trigger on_user_created
 after
 insert on auth.users for each row execute procedure handle_new_user();
+
+-- on_community_created
+create trigger on_community_created
+after
+insert on communities for each row execute procedure handle_new_community();
 
 -- on_post_created
 create trigger on_post_created
