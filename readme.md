@@ -21,11 +21,11 @@ It has the following features;
 
 ## How to run
 
-1. Clone this repo with `git clone https://github.com/alizahid/community.git`
+### 1. Clone this repo with `git clone https://github.com/alizahid/community.git`
 
-2. Install dependencies with Yarn `yarn`
+### 2. Install dependencies with Yarn `yarn`
 
-3. Setup local Supabase project
+### 3. Setup local Supabase project
 
 ```bash
 supabase init
@@ -33,13 +33,13 @@ supabase start
 supabase db reset
 ```
 
-4. Setup .env files
+### 4. Setup .env files
 
 There's two .env files; `.env` and `.env.local`
 
-### `.env`
-
 `.env` is purely for the seed script and `.env.local` is for the Expo app.
+
+### `.env`
 
 For `.env`, you need to define the following variables;
 
@@ -59,13 +59,13 @@ EXPO_PUBLIC_SUPABASE_URL=
 EXPO_PUBLIC_SUPABASE_KEY=
 ```
 
-4. Seed some data
+### 4. Seed some data
 
 > You can skip this part but then you'll be greeted by an empty app
 
 Run the seed script with `yarn seed` once you've setup `.env`.
 
-5. Start up
+### 5. Start up
 
 Start up the app with `yarn dev` and enjoy!
 
