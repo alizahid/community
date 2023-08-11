@@ -46,9 +46,7 @@ const Screen: FunctionComponent = () => {
       <Button
         loading={loading}
         onPress={() => signOut()}
-        style={tw`m-4 mt-auto border border-red-7`}
-        styleLabel={tw`text-red-11`}
-        variant="text"
+        style={tw`m-4 mt-auto bg-red-9`}
       >
         Sign out
       </Button>
