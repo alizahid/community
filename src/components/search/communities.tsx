@@ -27,9 +27,9 @@ export const SearchCommunitiesCard: FunctionComponent<Props> = ({
         loading ? (
           <PostSkeleton />
         ) : enabled ? (
-          <Empty animation={false} />
+          <Empty animated={false} />
         ) : (
-          <Empty animation={false} description={description} />
+          <Empty animated={false} description={description} />
         )
       }
       data={results}
