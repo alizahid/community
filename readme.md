@@ -1,6 +1,19 @@
+![Community](./src/assets/images/community.png)
+
 # Community
 
 Community is my entry for the [Supabase Launch Week 8 hackathon](https://supabase.com/blog/supabase-lw8-hackathon).
+
+It's a [Reddit](https://reddit.com/) style app with communities and posts. It supports both light and dark mode.
+
+It has the following features;
+
+- Feeds (personalized feed, community posts, user posts)
+- Communities
+- User
+- Posts with image attachments (you can create and delete)
+- Comments (you can create and delete)
+- Search (full text search)
 
 ## Demo
 
@@ -65,7 +78,8 @@ Community is built with [Expo](https://expo.dev) and [Supabase](https://supabase
 - [x] Auth
 - [x] Database
 - [x] Storage
-- [x] Postgres functions
+- [x] Postgres functions and triggers
+- [x] Full text search
 
 ## Team
 

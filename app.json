@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#fff",
         "foregroundImage": "./src/assets/expo/adaptive-icon.png"
       }
     },
@@ -28,7 +28,7 @@
       ]
     ],
     "splash": {
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#fff",
       "image": "./src/assets/expo/splash.png",
       "resizeMode": "contain"
     },
