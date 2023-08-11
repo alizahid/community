@@ -27,12 +27,21 @@ const Screen: FunctionComponent = () => {
       const from = pageParam * limit
       const to = from + limit
 
+      const memberships = await supabase
+        .from('members')
+        .select('community_id')
+        .eq('user_id', session?.user.id)
+
+      const communities =
+        memberships.data?.map(({ community_id }) => community_id) ?? []
+
       const { data } = await supabase
         .from('posts')
         .select(
           'id, content, meta, created_at, community:communities(id, slug, name), user:users(id, username), liked:likes(user_id), likes(count), comments(count)',
         )
         .eq('liked.user_id', session?.user.id)
+        .in('community_id', communities)
         .order('created_at', {
           ascending: false,
         })

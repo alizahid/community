@@ -96,7 +96,7 @@ select to authenticated using (true);
 create policy "Users can create communities" on communities as permissive for
 insert to authenticated with check (true);
 
--- communities
+-- members
 alter table members enable row level security;
 
 create policy "Users can view all members" on members as permissive for

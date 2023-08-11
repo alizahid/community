@@ -41,6 +41,7 @@ export const useJoinCommunity = (community: Community) => {
       })
     },
     onSettled: () => {
+      queryClient.invalidateQueries(['feed', session?.user.id])
       queryClient.invalidateQueries(['community', community.slug])
     },
   })

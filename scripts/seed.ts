@@ -3,6 +3,7 @@ import { addMinutes, formatISO, subMinutes } from 'date-fns'
 import { kebabCase, random, range, sample, sampleSize } from 'lodash'
 import { Client } from 'pg'
 import { createApi } from 'unsplash-js'
+import { type Random } from 'unsplash-js/dist/methods/photos/types'
 
 export const unsplash = createApi({
   accessKey: process.env.UNSPLASH_KEY!,
@@ -16,19 +17,23 @@ const main = async () => {
   await db.connect()
 
   // get photos from Unsplash
-  const photos = await unsplash.photos.getRandom({
+  const photosOne = await unsplash.photos.getRandom({
+    count: 30,
+  })
+  const photosTwo = await unsplash.photos.getRandom({
     count: 30,
   })
 
   // transform into images
-  const images = Array.isArray(photos.response)
-    ? photos.response.map((image) => ({
-        hash: image.blur_hash ?? undefined,
-        height: Math.round((1080 / image.width) * image.height),
-        url: image.urls.regular,
-        width: 1080,
-      }))
-    : []
+  const images = [
+    ...(photosOne.response as Array<Random>),
+    ...(photosTwo.response as Array<Random>),
+  ].map((image) => ({
+    hash: image.blur_hash ?? undefined,
+    height: Math.round((1080 / image.width) * image.height),
+    url: image.urls.regular,
+    width: 1080,
+  }))
 
   // delete all users
   await db.query('delete from auth.users')
@@ -50,9 +55,13 @@ const main = async () => {
   // delete all communities
   await db.query('delete from communities')
 
+  // disable trigger
+  await db.query('alter table communities disable trigger on_community_created')
+
   // create communities
   const communities = await Promise.all(
     [
+      'Community',
       'Apple',
       'Candy',
       'Dubai',
@@ -64,8 +73,11 @@ const main = async () => {
       'Workspaces',
       'World of Warcraft',
     ].map(async (name) => {
-      const slug = kebabCase(name)
-      const description = faker.lorem.paragraph()
+      const slug = name === 'Community' ? 'community' : kebabCase(name)
+      const description =
+        name === 'Community'
+          ? 'Official community for the Community app.'
+          : faker.lorem.paragraph()
 
       const result = await db.query<{
         id: number
@@ -78,25 +90,22 @@ const main = async () => {
     }),
   )
 
+  // enable trigger
+  await db.query('alter table communities enable trigger on_community_created')
+
   // disable trigger
   await db.query('alter table posts disable trigger on_post_created')
-
-  // begin transaction
-  await db.query('begin')
 
   // create posts
   await Promise.all(
     range(1_000).map(async () => {
       const communityId = sample(communities)
       const userId = sample(users)
-
       const content = faker.lorem.paragraph()
-
+      const date = subMinutes(new Date(), random(1440, 50_000))
       const meta = {
         images: sampleSize(images, random(0, 5)),
       }
-
-      const date = subMinutes(new Date(), random(1440, 50_000))
 
       const result = await db.query<{
         id: string
@@ -107,32 +116,34 @@ const main = async () => {
 
       const postId = result.rows[0].id
 
-      // create likes and comments
+      // create likes
       await Promise.all(
         range(random(5, 50)).map(() => {
           const userId = sample(users)
-
           const createdAt = formatISO(addMinutes(date, random(1, 45_000)))
 
+          return db.query(
+            'insert into likes (post_id, user_id, created_at) values ($1, $2, $3) on conflict do nothing',
+            [postId, userId, createdAt],
+          )
+        }),
+      )
+
+      // create comments
+      await Promise.all(
+        range(random(5, 50)).map(() => {
+          const userId = sample(users)
+          const createdAt = formatISO(addMinutes(date, random(1, 45_000)))
           const content = faker.lorem.paragraph()
 
-          return Promise.all([
-            db.query(
-              'insert into likes (post_id, user_id, created_at) values ($1, $2, $3) on conflict do nothing',
-              [postId, userId, createdAt],
-            ),
-            db.query(
-              'insert into comments (post_id, user_id, content, created_at) values ($1, $2, $3, $4) on conflict do nothing',
-              [postId, userId, content, createdAt],
-            ),
-          ])
+          return db.query(
+            'insert into comments (post_id, user_id, content, created_at) values ($1, $2, $3, $4) on conflict do nothing',
+            [postId, userId, content, createdAt],
+          )
         }),
       )
     }),
   )
-
-  // commit transaction
-  await db.query('commit')
 
   // enable trigger
   await db.query('alter table posts enable trigger on_post_created')

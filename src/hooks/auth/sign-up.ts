@@ -17,7 +17,7 @@ export const useSignUp = () => {
 
   const { error, isLoading, mutate } = useMutation<void, Error, Form>({
     mutationFn: async ({ email, password, username }) => {
-      const { error } = await supabase.auth.signUp({
+      const response = await supabase.auth.signUp({
         email,
         options: {
           data: {
@@ -27,8 +27,22 @@ export const useSignUp = () => {
         password,
       })
 
-      if (error) {
-        throw error
+      if (response.error) {
+        throw response.error
+      }
+
+      const community = await supabase
+        .from('communities')
+        .select('id')
+        .eq('slug', 'community')
+        .single()
+
+      if (community.data && response.data.user) {
+        await supabase.from('members').insert({
+          community_id: community.data.id,
+          role: 'member',
+          user_id: response.data.user.id,
+        })
       }
 
       router.replace('/home/')
