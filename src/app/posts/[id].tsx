@@ -1,24 +1,27 @@
 import { FlashList } from '@shopify/flash-list'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { parseJSON } from 'date-fns'
-import { useLocalSearchParams } from 'expo-router'
-import { type FunctionComponent } from 'react'
+import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { type FunctionComponent, useEffect } from 'react'
 
 import { CommentCard } from '~/components/comments/card'
 import { CommentForm } from '~/components/comments/form'
 import { Empty } from '~/components/common/empty'
+import { IconButton } from '~/components/common/icon-button'
 import { Refresher } from '~/components/common/refresh'
 import { Separator } from '~/components/common/separator'
 import { Spinner } from '~/components/common/spinner'
 import { PostCard } from '~/components/posts/card'
 import { CommentSkeleton } from '~/components/skeletons/comment'
 import { PostSkeleton } from '~/components/skeletons/post'
+import { useDeletePost } from '~/hooks/posts/delete'
 import { supabase } from '~/lib/supabase'
 import { useTailwind } from '~/lib/tailwind'
 import { useAuth } from '~/providers/auth'
 import { type CommentCollection, type CountColumn } from '~/types'
 
 const Screen: FunctionComponent = () => {
+  const navigation = useNavigation()
   const params = useLocalSearchParams()
 
   const id = Number(params.id)
@@ -54,6 +57,28 @@ const Screen: FunctionComponent = () => {
     },
     queryKey: ['post', id, session?.user.id],
   })
+
+  const deletePost = useDeletePost(post.data)
+
+  useEffect(() => {
+    if (!post.data) {
+      return
+    }
+
+    if (post.data.user?.id !== session?.user.id) {
+      return
+    }
+
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          loading={deletePost.loading}
+          name="delete"
+          onPress={() => deletePost.deletePost()}
+        />
+      ),
+    })
+  }, [deletePost, navigation, post.data, session?.user.id])
 
   const comments = useInfiniteQuery<CommentCollection>({
     enabled: !!post.data,

@@ -64,7 +64,7 @@ export const PostCard: FunctionComponent<Props> = ({
 
       <Main
         onPress={() => router.push(`/posts/${post.id}`)}
-        style={tw`flex-1 gap-4 py-4 pr-4`}
+        style={tw`flex-1 items-start gap-4 py-4 pr-4`}
       >
         {community && (
           <Pressable
