@@ -39,7 +39,7 @@ There's two .env files; `.env` and `.env.local`
 
 `.env` is purely for the seed script and `.env.local` is for the Expo app.
 
-### `.env`
+#### `.env`
 
 For `.env`, you need to define the following variables;
 
@@ -50,7 +50,7 @@ UNSPLASH_KEY=
 
 You can get `DATABASE_URL` from `supabase status` and `UNSPLASH_KEY` from [Unsplash](https://unsplash.com/developers).
 
-### `.env.local`
+#### `.env.local`
 
 For `.env.local`, you need to define the following two variables. You can get these from `supabase status`.
 
