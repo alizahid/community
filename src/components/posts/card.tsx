@@ -16,6 +16,7 @@ import { Gallery } from './gallery'
 
 type Props = {
   community?: boolean
+  likeable?: boolean
   linked?: boolean
   post: Post
   style?: StyleProp<ViewStyle>
@@ -23,6 +24,7 @@ type Props = {
 
 export const PostCard: FunctionComponent<Props> = ({
   community = true,
+  likeable = true,
   linked = true,
   post,
   style,
@@ -42,6 +44,7 @@ export const PostCard: FunctionComponent<Props> = ({
   return (
     <View style={[tw`flex-row`, style]}>
       <Pressable
+        disabled={!likeable}
         onPress={() => likePost()}
         style={tw`items-center py-4 gap-2 w-12`}
       >

@@ -35,7 +35,7 @@ export const SearchPostsCard: FunctionComponent<Props> = ({
       data={results}
       estimatedItemSize={108}
       refreshControl={<Refresher onRefresh={refetch} />}
-      renderItem={({ item }) => <PostCard post={item} />}
+      renderItem={({ item }) => <PostCard likeable={false} post={item} />}
     />
   )
 }
