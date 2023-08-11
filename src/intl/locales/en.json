@@ -25,9 +25,6 @@
     }
   },
   "screen": {
-    "account": {
-      "title": "Account"
-    },
     "auth": {
       "signIn": {
         "form": {
@@ -61,13 +58,23 @@
       }
     },
     "communities": {
-      "title": "Communities"
-    },
-    "community": {
-      "title": "Loading"
+      "community": {
+        "title": "Loading"
+      },
+      "new": {
+        "title": "New community"
+      }
     },
     "home": {
-      "title": "Home"
+      "account": {
+        "title": "Account"
+      },
+      "communities": {
+        "title": "Communities"
+      },
+      "index": {
+        "title": "Home"
+      }
     },
     "landing": {
       "auth": {

@@ -7,7 +7,7 @@ import { StackHeader } from '~/components/navigation/header'
 import { TabBar } from '~/components/navigation/tab-bar'
 
 const Layout: FunctionComponent = () => {
-  const t = useTranslations('screen')
+  const t = useTranslations('screen.home')
 
   return (
     <Tabs
@@ -22,7 +22,7 @@ const Layout: FunctionComponent = () => {
           tabBarIcon: ({ focused }) => (
             <Icon color={focused ? 'primary-9' : 'gray-9'} name="home" />
           ),
-          title: t('home.title'),
+          title: t('index.title'),
         }}
       />
 

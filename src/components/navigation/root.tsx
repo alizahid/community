@@ -43,7 +43,7 @@ export const Root: FunctionComponent = () => {
       <Stack.Screen
         name="communities/[slug]"
         options={{
-          title: t('community.title'),
+          title: t('communities.community.title'),
         }}
       />
 
