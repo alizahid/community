@@ -48,7 +48,7 @@ export const useCreatePost = () => {
         throw error
       }
 
-      router.push(`/posts/${data.id}`)
+      router.replace(`/posts/${data.id}`)
     },
   })
 

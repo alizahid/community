@@ -44,7 +44,7 @@ export const useCreateCommunity = () => {
         throw error
       }
 
-      router.push(`/communities/${data.slug}`)
+      router.replace(`/communities/${data.slug}`)
     },
     onSettled: () => {
       queryClient.invalidateQueries(['communities'])
