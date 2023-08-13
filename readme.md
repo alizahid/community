@@ -17,7 +17,7 @@ It has the following features;
 
 ## Demo
 
-> Coming soon
+Here's a video you can view; [Link](https://drive.google.com/file/d/1V-hASlYZmArZQVHtRNSUOzPUOJ7aUVZO/view?usp=sharing)
 
 ## How to run
 
