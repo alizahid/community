@@ -9,9 +9,9 @@ export const useSignOut = () => {
 
   const { isLoading, mutate } = useMutation({
     mutationFn: async () => {
-      queryClient.clear()
-
       await supabase.auth.signOut()
+
+      queryClient.clear()
 
       router.replace('/')
     },
