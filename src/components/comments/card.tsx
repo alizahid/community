@@ -80,7 +80,7 @@ export const CommentCard: FunctionComponent<Props> = ({
               </Typography>
             </Pressable>
 
-            <View style={tw`flex-row items-center gap-2`}>
+            <View style={tw`flex-row items-center gap-1`}>
               <Icon color="gray-9" name="clock" style={tw`h-3 w-3`} />
 
               <Typography color="gray-11" size="xs">

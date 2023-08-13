@@ -46,7 +46,7 @@ export const PostCard: FunctionComponent<Props> = ({
       <Pressable
         disabled={!likeable}
         onPress={() => likePost()}
-        style={tw`items-center py-4 gap-2 w-12`}
+        style={tw`items-center py-4 gap-1 w-12`}
       >
         <Icon color={post.liked ? 'primary-9' : 'gray-9'} name="like" />
 
@@ -69,7 +69,7 @@ export const PostCard: FunctionComponent<Props> = ({
         {community && (
           <Pressable
             onPress={() => router.push(`/communities/${post.community?.slug}`)}
-            style={tw`flex-row items-center gap-2`}
+            style={tw`flex-row items-center gap-1`}
           >
             <Avatar name={post.community?.slug!} style={tw`h-4 w-4`} />
 
@@ -79,14 +79,14 @@ export const PostCard: FunctionComponent<Props> = ({
           </Pressable>
         )}
 
-        <Typography>{post.content}</Typography>
+        <Typography lines={3}>{post.content}</Typography>
 
         <Gallery images={meta.images} />
 
         <View style={tw`flex-row items-center gap-4`}>
           <Pressable
             onPress={() => router.push(`/profile/${post.user?.username}`)}
-            style={tw`flex-row items-center gap-2`}
+            style={tw`flex-row items-center gap-1`}
           >
             <Avatar
               name={post.user?.username!}
@@ -99,7 +99,7 @@ export const PostCard: FunctionComponent<Props> = ({
             </Typography>
           </Pressable>
 
-          <View style={tw`flex-row items-center gap-2`}>
+          <View style={tw`flex-row items-center gap-1`}>
             <Icon color="gray-9" name="comment" style={tw`h-4 w-4`} />
 
             <Typography color="gray-11" size="sm" style={tw`tabular-nums`}>
@@ -109,7 +109,7 @@ export const PostCard: FunctionComponent<Props> = ({
             </Typography>
           </View>
 
-          <View style={tw`flex-row items-center gap-2`}>
+          <View style={tw`flex-row items-center gap-1`}>
             <Icon color="gray-9" name="clock" style={tw`h-4 w-4`} />
 
             <Typography color="gray-11" size="sm">

@@ -169,7 +169,7 @@ $function$;
 
 -- handle_new_post
 create or replace function handle_new_post() returns trigger LANGUAGE plpgsql security definer as $function$ begin
-insert into public.likes (post_id, user_id)
+insert into likes (post_id, user_id)
 values (new.id, auth.uid());
 
 return new;
