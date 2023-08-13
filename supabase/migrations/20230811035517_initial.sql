@@ -210,3 +210,11 @@ alter table posts
 add column search tsvector generated always as (to_tsvector('english', content)) stored;
 
 create index index_posts_search on posts using gin (search);
+
+-- storage
+-- 
+insert into storage.buckets (id, name, public)
+values ('assets', 'assets', true);
+
+create policy "Users can upload images" on storage.objects for
+insert to authenticated with check (bucket_id = 'assets');
